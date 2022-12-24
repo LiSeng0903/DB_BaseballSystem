@@ -16,7 +16,7 @@ const MenuStyle = styled(Menu)`
     justify-content: space-evenly
 `
 
-const items: MenuProps['items'] = [
+const items = [
   {
     label: '球隊',
     key: 'team',
@@ -44,7 +44,7 @@ const items: MenuProps['items'] = [
   },
 ];
 
-const MianPge = () => {
+const MianPage = () => {
   const [current, setCurrent] = useState('mail');
 
   const onClick = (e) => {
@@ -64,4 +64,4 @@ const MianPge = () => {
 
 };
 
-export default MianPge;
+export default MianPage;
