@@ -1,6 +1,6 @@
 // Import 
 import styled from 'styled-components'
-import MianPge from "./MainPage"
+import MainPage from "./MainPage"
 
 // Wrapper 
 const AppWrapper = styled.div`
@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <AppWrapper>
-      {<MianPge />}
+      {<MainPage />}
     </AppWrapper >
   )
 }

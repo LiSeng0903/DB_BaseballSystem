@@ -3,6 +3,8 @@ import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/ico
 import { Menu } from 'antd';
 import styled from 'styled-components'
 
+import TeamMember from "../components/TeamMember"
+
 const TopBarStyle = styled.div`
     display: flex;
     flex-direction: row;
@@ -44,7 +46,7 @@ const items = [
   },
 ];
 
-const MianPage = () => {
+const MainPage = () => {
   const [current, setCurrent] = useState('mail');
 
   const onClick = (e) => {
@@ -58,10 +60,10 @@ const MianPage = () => {
             <div>logo</div>
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
-        <div>aaa</div>
+        <TeamMember/>
     </>
     )
 
 };
 
-export default MianPage;
+export default MainPage;
