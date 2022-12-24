@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import styled from 'styled-components'
+import Schedule from "./Schedule"
 
 const TopBarStyle = styled.div`
     display: flex;
@@ -14,6 +15,11 @@ const MenuStyle = styled(Menu)`
     width: 90%;
     display: flex;
     justify-content: space-evenly
+`
+const BarItemStyle = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 3%
 `
 
 const items = [
@@ -44,7 +50,7 @@ const items = [
   },
 ];
 
-const MianPage = () => {
+const MainPage = () => {
   const [current, setCurrent] = useState('mail');
 
   const onClick = (e) => {
@@ -58,10 +64,12 @@ const MianPage = () => {
             <div>logo</div>
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
-        <div>aaa</div>
+        <BarItemStyle >
+        <Schedule />
+        </BarItemStyle >
     </>
     )
 
 };
 
-export default MianPage;
+export default MainPage;
