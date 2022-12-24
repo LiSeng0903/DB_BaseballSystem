@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import styled from 'styled-components'
+import Schedule from "./Schedule"
 
 import TeamMember from "../components/TeamMember"
 
@@ -16,6 +17,11 @@ const MenuStyle = styled(Menu)`
     width: 90%;
     display: flex;
     justify-content: space-evenly
+`
+const BarItemStyle = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 3%
 `
 
 const items = [
@@ -60,7 +66,9 @@ const MainPage = () => {
             <div>logo</div>
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
-        <TeamMember/>
+        <BarItemStyle >
+        <></>
+        </BarItemStyle >
     </>
     )
 
