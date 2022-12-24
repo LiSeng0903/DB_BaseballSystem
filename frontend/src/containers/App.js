@@ -2,7 +2,6 @@
 import styled from 'styled-components'
 import MainPage from "./MainPage"
 
-
 // Wrapper 
 const AppWrapper = styled.div`
     display: flex;

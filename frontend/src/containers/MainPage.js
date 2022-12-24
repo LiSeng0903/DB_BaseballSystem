@@ -4,6 +4,8 @@ import { Menu } from 'antd';
 import styled from 'styled-components'
 import Schedule from "./Schedule"
 
+import TeamMember from "../components/TeamMember"
+
 const TopBarStyle = styled.div`
     display: flex;
     flex-direction: row;
@@ -65,7 +67,7 @@ const MainPage = () => {
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
         <BarItemStyle >
-        <Schedule />
+        <></>
         </BarItemStyle >
     </>
     )
