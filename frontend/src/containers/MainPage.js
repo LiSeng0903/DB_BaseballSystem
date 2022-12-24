@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd'; 
+import { Menu } from 'antd';
 import styled from 'styled-components'
 
 const TopBarStyle = styled.div`
@@ -48,12 +47,12 @@ const items: MenuProps['items'] = [
 const MianPge = () => {
   const [current, setCurrent] = useState('mail');
 
-  const onClick: MenuProps['onClick'] = (e) => {
+  const onClick = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
   };
 
-  return (
+    return(
     <>  
         <TopBarStyle>
             <div>logo</div>
@@ -61,7 +60,8 @@ const MianPge = () => {
         </TopBarStyle>
         <div>aaa</div>
     </>
-  );
+    )
+
 };
 
 export default MianPge;
