@@ -26,6 +26,15 @@ const get_SID = () => {
     return SID
 }
 
+const get_phone = () => {
+    let phone = []
+    for ( let i = 0; i < 8; i++ ) {
+        phone.push( String( randChoose( range( 0, 10 ) ) ) )
+    }
+    phone = '09' + phone.join( '' )
+    return phone
+}
+
 const get_test_case = () => {
     let players = []
     let teams = []
@@ -39,6 +48,7 @@ const get_test_case = () => {
     // Build teams  
     for ( let teamId = 0; teamId < teamNames.length; teamId++ ) {
 
+        // Establish team
         teams.push( {
             TName: teamNames[teamId],
             Captain: ''
@@ -48,6 +58,7 @@ const get_test_case = () => {
         let managerCnt = randChoose( range( 3, 10 ) )
 
         for ( let i = 0; i < playerCnt; i++ ) {
+            // Generate players 
             let newPlayer = {
                 SID: get_SID(),
                 PName: randChoose( NAME_LANGUAGE == 'chinese' ? chinese_names : english_names ),
@@ -58,13 +69,24 @@ const get_test_case = () => {
                 JerNum: randChoose( range( 1, 100 ) ),
                 Team: teamNames[teamId]
             }
+            players.push( newPlayer )
 
             // Choose captain
             if ( i == 0 ) { teams[teamId].Captain = newPlayer.SID }
 
-            players.push( newPlayer )
+            // Generate players' relatives 
+            let relativesCnt = randChoose( range( 0, 4 ) )
+            for ( let j = 0; j < relativesCnt; j++ ) {
+                relatives.push( {
+                    SID: newPlayer.SID,
+                    Relation: randChoose( ['父', '母', '兄', '弟', '姊', '妹'] ),
+                    Phone: get_phone(),
+                    Name: randChoose( NAME_LANGUAGE == 'chinese' ? chinese_names : english_names )
+                } )
+            }
         }
 
+        // Generate managers 
         for ( let i = 0; i < managerCnt; i++ ) {
             let newManager = {
                 SID: get_SID(),
@@ -76,6 +98,7 @@ const get_test_case = () => {
             }
         }
     }
+
 
     return {
         players: players,
