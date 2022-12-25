@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Menu } from 'antd';
 import styled from 'styled-components'
-import Schedule from "./Schedule"
 
+
+import Schedule from "./Schedule"
 import TeamMember from "../components/TeamMember"
 
 const TopBarStyle = styled.div`
@@ -32,7 +35,7 @@ const items = [
     children: [
         {
             label: 'Option 1',
-            key: 'setting:1',
+            key: 'team1',
         },
         {
             label: 'Option 2',
@@ -42,7 +45,7 @@ const items = [
   },    
   {
     label: '賽程',
-    key: 'shcedule',
+    key: 'schedule',
     icon: <AppstoreOutlined />,
   },
   {
@@ -53,7 +56,7 @@ const items = [
 ];
 
 const MainPage = () => {
-  const [current, setCurrent] = useState('mail');
+  const [current, setCurrent] = useState('schedule');
 
   const onClick = (e) => {
     console.log('click ', e);
@@ -61,15 +64,15 @@ const MainPage = () => {
   };
 
     return(
-    <>  
+      <>
         <TopBarStyle>
             <div>logo</div>
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
         <BarItemStyle >
-        <></>
+          {current === "schedule" ? <Schedule /> : current === "score" ? null : <TeamMember/>}
         </BarItemStyle >
-    </>
+      </>
     )
 
 };
