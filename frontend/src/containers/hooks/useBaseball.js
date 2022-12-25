@@ -15,7 +15,8 @@ const BaseballContext = createContext({
     items: [],
     teams: [],
     players: [],
-
+    captain: [],
+    managers: [],
 })
 
 const BaseballProvider = (props) => {
@@ -64,14 +65,24 @@ const BaseballProvider = (props) => {
       ])
     const [teams, setTeams] = useState([]);
     const [players, setPlayers] = useState([]);
+    const [captain, setCaptain] = useState([]);
+    const [managers, setManagers] = useState([]);
 
     const getTeams = () => {
         sendData(["get_teams"]);
         console.log("send request")
     }
 
-    const getTeamMembers = (teamName) => {
-        sendData(["getTeamMembers", teamName])
+    const get_team_players = (teamName) => {
+        sendData(["get_team_players", teamName])
+    }
+
+    const get_team_captain = (teamName) => {
+        sendData(["get_team_captain", teamName])
+    }
+
+    const get_team_managers = (teamName) => {
+        sendData(["get_team_managers", teamName])
     }
 
     client.onmessage = (byteString) => {
@@ -82,6 +93,20 @@ const BaseballProvider = (props) => {
             case "rp_get_teams": {
                 setTeams(payload);
                 break;
+            }
+
+            case "rp_get_team_players": {
+                setPlayers(payload);
+                break;
+            }
+
+            case "rp_get_team_captain": {
+                setCaptain(payload);
+                break;
+            }
+
+            case "rp_get_team_managers": {
+                setManagers(payload);
             }
         }
     }
