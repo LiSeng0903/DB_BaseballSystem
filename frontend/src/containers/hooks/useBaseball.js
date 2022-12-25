@@ -107,6 +107,7 @@ const BaseballProvider = (props) => {
 
             case "rp_get_team_managers": {
                 setManagers(payload);
+                break;
             }
         }
     }
