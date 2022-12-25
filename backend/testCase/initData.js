@@ -26,16 +26,20 @@ const initData = async () => {
         return r
     }
 
-    // Team 
-    let teams = []
-    for ( let i = 0; i < teamNames.length; i++ ) {
-        teams.push( { TName: teamNames[i] } )
-    }
-    await Team.deleteMany( {} )
-    await Team.insertMany( teams )
-
     // Players 
     let players = []
+    for ( let i = 0; i < teamNames.length; i++ ) { // Captains 
+        players.push( {
+            SID: 'B09905' + String( i ).padStart( 3, '0' ),
+            PName: randChoose( NAME_LANGUAGE == 'chinese' ? chinese_names : english_names ),
+            Dept: randChoose( depts ),
+            Grade: randChoose( range( 1, 5 ) ),
+            Sex: randChoose( ['男', '女', '其他'] ),
+            IsOB: randChoose( [true, false] ),
+            JerNum: randChoose( range( 1, 100 ) ),
+            Team: teamNames[i]
+        } )
+    }
     for ( let i = 0; i < PLAYER_CNT; i++ ) {
         players.push( {
             SID: 'B09705' + String( i ).padStart( 3, '0' ),
@@ -50,6 +54,18 @@ const initData = async () => {
     }
     await Player.deleteMany( {} )
     await Player.insertMany( players )
+
+    // Team 
+    let teams = []
+    for ( let i = 0; i < teamNames.length; i++ ) {
+        teams.push( {
+            TName: teamNames[i],
+            Captain: players[i].SID
+        } )
+    }
+
+    await Team.deleteMany( {} )
+    await Team.insertMany( teams )
 
     // Managers 
     let managers = []

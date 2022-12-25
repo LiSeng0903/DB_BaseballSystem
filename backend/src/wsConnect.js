@@ -23,28 +23,32 @@ const wsConnect = {
                     case 'get_teams': {
                         start_req_msg( task )
 
-                        let team_names = []
+                        let teamNames = []
                         let teams = await Team.find( {} )
                         for ( let i = 0; i < teams.length; i++ ) {
-                            team_names.push( teams[i].TName )
+                            teamNames.push( teams[i].TName )
                         }
-                        sendData( clientWS, ['rp_get_teams', team_names] )
+                        sendData( clientWS, ['rp_get_teams', teamNames] )
 
                         end_req_msg( task )
                         break
                     }
                     case 'get_team_players': {
                         start_req_msg( task )
+
                         let teamName = payload
-                        let teamPlayers = Player.find( {} )
+                        let teamPlayers = await Player.find( { Team: teamName } )
+                        sendData( clientWS, ['rp_get_team_players', teamPlayers] )
 
                         end_req_msg( task )
                         break
                     }
                     case 'get_team_managers': {
                         start_req_msg( task )
+
                         let teamName = payload
-                        let teamPlayers = Player.find( {} )
+                        let teamManagers = await Manager.find( { Team: teamName } )
+                        sendData( clientWS, ['rp_get_team_managers', teamManagers] )
 
                         end_req_msg( task )
                         break
@@ -52,8 +56,9 @@ const wsConnect = {
                     case 'get_team_captain': {
                         start_req_msg( task )
                         let teamName = payload
-                        let teamPlayers = Player.find( {} )
-
+                        let targetTeam = await Team.findOne( { TName: teamName } )
+                        let captain = await Player.findOne( { SID: targetTeam.Captain } )
+                        sendData( clientWS, ['rp_get_team_captain', captain] )
                         end_req_msg( task )
                         break
                     }
