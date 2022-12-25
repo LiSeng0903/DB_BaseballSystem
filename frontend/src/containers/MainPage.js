@@ -26,7 +26,8 @@ const MenuStyle = styled(Menu)`
 const BarItemStyle = styled.div`
     display: flex;
     justify-content: center;
-    margin: 3%
+    margin: 3%;
+    width: 100%
 `
 
 const MainPage = () => {
