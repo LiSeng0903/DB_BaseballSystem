@@ -41,6 +41,7 @@ const BaseballContext = createContext(
 )
 
 const BaseballProvider = (props) => {
+  
     const [items, setItems] = useState([
         {
           label: '球隊',
@@ -100,7 +101,6 @@ const BaseballProvider = (props) => {
     const getPeople = (teamName, type) => {
         switch (type){
             case "players": {
-                console.log("asd")
                 sendData(["get_team_players", teamName])
                 break;
             }
@@ -116,18 +116,6 @@ const BaseballProvider = (props) => {
             }
         }
     }
-
-    // const get_team_players = (teamName) => {
-    //     sendData(["get_team_players", teamName])
-    // }
-
-    // const get_team_captain = (teamName) => {
-    //     sendData(["get_team_captain", teamName])
-    // }
-
-    // const get_team_managers = (teamName) => {
-    //     sendData(["get_team_managers", teamName])
-    // }
 
     const get_schedule = () => {
         sendData(["get_schedule", ])
