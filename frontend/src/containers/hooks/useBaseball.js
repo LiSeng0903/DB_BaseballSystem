@@ -7,9 +7,11 @@ client.onopen = () => {
     sendData(["get_teams"]);
 }
 
+
 const sendData = async (data) => {
     await client.send(JSON.stringify(data));
 }
+
 
 const BaseballContext = createContext({
     items: [],
@@ -68,6 +70,9 @@ const BaseballProvider = (props) => {
     const [captain, setCaptain] = useState([]);
     const [managers, setManagers] = useState([]);
 
+
+
+    // sending request
     const getTeams = () => {
         sendData(["get_teams"]);
         console.log("send request")
@@ -85,6 +90,12 @@ const BaseballProvider = (props) => {
         sendData(["get_team_managers", teamName])
     }
 
+    const get_schedule = () => {
+        sendData(["get_schedule", ])
+    }
+
+
+    // receiving data
     client.onmessage = (byteString) => {
         const { data } = byteString;
         const [task, payload] = JSON.parse(data);
@@ -118,6 +129,9 @@ const BaseballProvider = (props) => {
                 items,
                 teams,
                 getTeams,
+                get_team_captain,
+                get_team_managers,
+                get_team_players,
             }}
             {...props}
         />
