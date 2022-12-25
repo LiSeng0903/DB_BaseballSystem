@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-import { chinese_names } from './chinese_names.js'
-import { english_names } from './english_names.js'
-import { depts } from "./depts.js"
-import { teams as teamNames } from './teams.js'
+import { chinese_names } from './data_chinese_names.js'
+import { english_names } from './data_english_names.js'
+import { depts } from "./data_depts.js"
+import { teams as teamNames } from './data_teams.js'
 import { Player, Team, Manager, Game, HitRecord, Relatives, Attendance, CanPosition } from '../model/models.js'
 
 const PLAYER_CNT = 300
@@ -12,17 +12,6 @@ const RECORD_CNT = 10
 const NAME_LANGUAGE = 'chinese'
 
 const initData = async () => {
-    const getTeamId = async ( TName ) => {
-        let team = await Team.findOne( { TName: TName } )
-        let teamId = team._id.toString()
-        return teamId
-    }
-
-    const getGameId = async ( GID ) => {
-        let game = await game.findOne( { GID: GID } )
-        let gameId = game._id.toString()
-        return gameId
-    }
 
     const randChoose = ( lst ) => {
         let choice = lst[( Math.random() * lst.length ) | 0]
@@ -56,7 +45,7 @@ const initData = async () => {
             Sex: randChoose( ['男', '女', '其他'] ),
             IsOB: randChoose( [true, false] ),
             JerNum: randChoose( range( 1, 100 ) ),
-            Team: await getTeamId( randChoose( teamNames ) )
+            Team: randChoose( teamNames )
         } )
     }
     await Player.deleteMany( {} )
@@ -71,7 +60,7 @@ const initData = async () => {
             Dept: randChoose( depts ),
             Grade: randChoose( range( 1, 5 ) ),
             Sex: randChoose( ['男', '女', '其他'] ),
-            Team: await getTeamId( randChoose( teamNames ) )
+            Team: randChoose( teamNames )
         } )
     }
     await Manager.deleteMany( {} )
@@ -83,24 +72,14 @@ const initData = async () => {
         games.push( {
             GID: i,
             Date: '2022-' + String( randChoose( range( 10, 13 ) ) ) + '-' + String( randChoose( range( 1, 32 ) ) ),
-            HomeTeam: await getTeamId( randChoose( teamNames ) ),
+            HomeTeam: randChoose( teamNames ),
             HomeScore: randChoose( range( 0, 10 ) ),
-            AwayTeam: await getTeamId( randChoose( teamNames ) ),
+            AwayTeam: randChoose( teamNames ),
             AwayScore: randChoose( range( 0, 10 ) ),
         } )
     }
     await Game.deleteMany( {} )
     await Game.insertMany( games )
-
-    // Hit record
-    // let hitRecords = []
-    // for ( let i = 0; i < RECORD_CNT; i++ ) {
-    //     GID: await getGameId( randChoose( range( 1, GAME_CNT + 1 ) ) ),
-    //         PAID: ra,
-    //             Result: randChoose( ['H', 'BB', 'O'] ),
-    //                 Pitcher: ,
-    //     Hitter: ,
-    // }
 
     console.log( 'data init' )
 }
