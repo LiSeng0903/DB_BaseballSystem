@@ -10,7 +10,7 @@ def create_names( lan='chinese' ):
             names[ i ] = "'" + names[ i ] + "'"
         names = ','.join( names )
 
-        file = open( './chinese_names.js', 'w', encoding='UTF-8' )
+        file = open( './data_chinese_names.js', 'w', encoding='UTF-8' )
         file.write( 'const chinese_names = [' )
         file.write( names )
         file.write( ']\n' )
@@ -25,7 +25,7 @@ def create_names( lan='chinese' ):
             names[ i ] = "'" + names[ i ][ :-1 ] + "'"
         names = ','.join( names )
 
-        with open( './english_names.js', 'w' ) as f:
+        with open( './data_english_names.js', 'w' ) as f:
             f.write( 'const english_names = [' )
             f.write( names )
             f.write( ']\n' )

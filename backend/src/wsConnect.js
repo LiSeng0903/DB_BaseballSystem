@@ -33,8 +33,29 @@ const wsConnect = {
                         end_req_msg( task )
                         break
                     }
-                    case 'get_team_members': {
+                    case 'get_team_players': {
+                        start_req_msg( task )
+                        let teamName = payload
+                        let teamPlayers = Player.find( {} )
 
+                        end_req_msg( task )
+                        break
+                    }
+                    case 'get_team_managers': {
+                        start_req_msg( task )
+                        let teamName = payload
+                        let teamPlayers = Player.find( {} )
+
+                        end_req_msg( task )
+                        break
+                    }
+                    case 'get_team_captain': {
+                        start_req_msg( task )
+                        let teamName = payload
+                        let teamPlayers = Player.find( {} )
+
+                        end_req_msg( task )
+                        break
                     }
                     default:
                         break
