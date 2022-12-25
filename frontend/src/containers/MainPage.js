@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Menu } from 'antd';
 import styled from 'styled-components'
+
+import { useBaseball } from './hooks/useBaseball';
 
 
 import Schedule from "./Schedule"
@@ -27,36 +29,13 @@ const BarItemStyle = styled.div`
     margin: 3%
 `
 
-const items = [
-  {
-    label: '球隊',
-    key: 'team',
-    icon: <MailOutlined />,
-    children: [
-        {
-            label: 'Option 1',
-            key: 'team1',
-        },
-        {
-            label: 'Option 2',
-            key: 'setting:2',
-        },
-    ],
-  },    
-  {
-    label: '賽程',
-    key: 'schedule',
-    icon: <AppstoreOutlined />,
-  },
-  {
-    label: "戰積",
-    key: 'score',
-    icon: <MailOutlined />,
-  },
-];
-
 const MainPage = () => {
+  const { items, teams, getTeams } = useBaseball();
   const [current, setCurrent] = useState('schedule');
+
+  useEffect(()=>{
+    console.log(items);
+  },[])
 
   const onClick = (e) => {
     console.log('click ', e);
