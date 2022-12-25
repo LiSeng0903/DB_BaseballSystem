@@ -85,8 +85,6 @@ const BaseballProvider = (props) => {
         sendData(["get_team_managers", teamName])
     }
 
-    
-
     client.onmessage = (byteString) => {
         const { data } = byteString;
         const [task, payload] = JSON.parse(data);
