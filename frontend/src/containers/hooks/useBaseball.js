@@ -13,13 +13,32 @@ const sendData = async (data) => {
 }
 
 
-const BaseballContext = createContext({
-    items: [],
-    teams: [],
-    players: [],
-    captain: [],
-    managers: [],
-})
+const BaseballContext = createContext(
+    {
+      items: [],
+      setItems: () => {},
+
+      teams: [],
+      setTeams: () => {},
+
+      players: [],
+      setPlayers: () => {},
+
+      captain: [],
+      setCaptain: () => {},
+
+      managers: [],
+      setManagers: () => {},
+
+      getTeams: () => {},
+
+      getPeople: () => {},
+
+      get_schedule: () => {},
+
+      get_score: () => {},
+    }
+)
 
 const BaseballProvider = (props) => {
     const [items, setItems] = useState([
@@ -78,20 +97,44 @@ const BaseballProvider = (props) => {
         console.log("send request")
     }
 
-    const get_team_players = (teamName) => {
-        sendData(["get_team_players", teamName])
+    const getPeople = (teamName, type) => {
+        switch (type){
+            case "players": {
+                console.log("asd")
+                sendData(["get_team_players", teamName])
+                break;
+            }
+
+            case "captain": {
+                sendData(["get_team_captain", teamName])
+                break;
+            }
+
+            case "managers": {
+                sendData(["get_team_managers", teamName])
+                break;
+            }
+        }
     }
 
-    const get_team_captain = (teamName) => {
-        sendData(["get_team_captain", teamName])
-    }
+    // const get_team_players = (teamName) => {
+    //     sendData(["get_team_players", teamName])
+    // }
 
-    const get_team_managers = (teamName) => {
-        sendData(["get_team_managers", teamName])
-    }
+    // const get_team_captain = (teamName) => {
+    //     sendData(["get_team_captain", teamName])
+    // }
+
+    // const get_team_managers = (teamName) => {
+    //     sendData(["get_team_managers", teamName])
+    // }
 
     const get_schedule = () => {
         sendData(["get_schedule", ])
+    }
+
+    const get_score = () => {
+        sendData(["get_score", ])
     }
 
 
@@ -129,9 +172,7 @@ const BaseballProvider = (props) => {
                 items,
                 teams,
                 getTeams,
-                get_team_captain,
-                get_team_managers,
-                get_team_players,
+                getPeople,
             }}
             {...props}
         />
