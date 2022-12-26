@@ -1,10 +1,10 @@
 // import data 
-import { depts } from "./data/data_depts.js"
-import { teams as teamNames } from './data/data_teams.js'
-import { chinese_names } from './data/data_chinese_names.js'
-import { english_names } from './data/data_english_names.js'
-import { relations } from "./data/data_relations.js"
-import { positions } from "./data/data_positions.js"
+let depts = require( './data/data_depts.js' ).depts
+let teamNames = require( './data/data_teams.js' ).teams
+let chinese_names = require( './data/data_chinese_names.js' ).chinese_names
+let english_names = require( './data/data_english_names.js' ).english_names
+let relations = require( './data/data_relations.js' ).relations
+let positions = require( './data/data_positions.js' ).positions
 
 const NAME_LANGUAGE = 'chinese'
 
@@ -308,4 +308,8 @@ const get_test_case = () => {
     }
 }
 
-export { get_test_case }
+console.log( get_test_case() )
+
+module.exports = {
+    get_test_case: get_test_case
+}

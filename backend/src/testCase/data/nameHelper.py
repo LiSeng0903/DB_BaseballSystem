@@ -14,7 +14,7 @@ def create_names( lan='chinese' ):
         file.write( 'const chinese_names = [' )
         file.write( names )
         file.write( ']\n' )
-        file.write( 'export {chinese_names}' )
+        file.write( 'module.exports =  { chinese_names: chinese_names}' )
         file.close()
 
     elif lan == 'english':
@@ -29,7 +29,7 @@ def create_names( lan='chinese' ):
             f.write( 'const english_names = [' )
             f.write( names )
             f.write( ']\n' )
-            f.write( 'export {english_names}' )
+            f.write( 'module.exports =  { english_names: english_names}' )
 
 
 if __name__ == '__main__':
