@@ -20,7 +20,7 @@ const BaseballContext = createContext(
       players: [],
       setPlayers: () => {},
 
-      captain: [],
+      captain: {},
       setCaptain: () => {},
 
       managers: [],
@@ -86,7 +86,7 @@ const BaseballProvider = (props) => {
       ])
     const [teams, setTeams] = useState([]);
     const [players, setPlayers] = useState([]);
-    const [captain, setCaptain] = useState([]);
+    const [captain, setCaptain] = useState({});
     const [managers, setManagers] = useState([]);
     const [games, setGames] = useState([]);
 
@@ -166,6 +166,8 @@ const BaseballProvider = (props) => {
                 items,
                 teams,
                 players,
+                captain,
+                managers,
                 getTeams,
                 getPeople,
                 get_schedule,

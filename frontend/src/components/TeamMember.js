@@ -9,16 +9,26 @@ const CardWrapper=styled.div`
     flex-wrap: wrap
 `
 
-const TeamMember =({ players }) => {
+const TeamMember =({ players, captain, managers }) => {
     useEffect(() => {
 
     }, [])
-
+    console.log("p",players, "c",captain, "m",managers)
     return(
         <CardWrapper>
+
+            <h2>Captain</h2>
+            <MemberCard member={captain}/>
+            <h2>Players</h2>
             {players.map((player) => {
                 return (
-                    <MemberCard player={player}/>
+                    <MemberCard member={player}/>
+                )
+            })}
+            <h2>Manegers</h2>
+            {managers.map((manager) => {
+                return (
+                    <MemberCard member={manager}/>
                 )
             })}
         </CardWrapper>
