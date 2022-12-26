@@ -281,9 +281,21 @@ const get_test_case = () => {
         }
     }
 
-    let game = new Game( teamNames, players, canPositions )
-    game.playGame()
-    console.log( game.get_attendance() )
+    // play games 
+    for ( let i = 0; i < 100; i++ ) {
+        let game = new Game( teamNames, players, canPositions )
+        game.playGame()
+
+        // Game 
+        games.push( game.get_game() )
+
+        // Hit record 
+        hitRecords = hitRecords.concat( game.get_hit_record() )
+
+        // attendance 
+        attendances = attendances.concat( game.get_attendance() )
+    }
+
     return {
         players: players,
         teams: teams,
