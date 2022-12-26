@@ -111,6 +111,7 @@ const wsConnect = {
                             win: win,
                             lose: lose,
                             tie: tie,
+                            total: win + lose + tie,
                             winRate: winRate
                         }
 
