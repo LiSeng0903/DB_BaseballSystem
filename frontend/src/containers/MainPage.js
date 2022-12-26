@@ -28,7 +28,8 @@ const BarItemStyle = styled.div`
     display: flex;
     justify-content: center;
     margin: 3%;
-    width: 100%
+    width: 100%;
+    background-color: aliceblue;
 `
 
 const MainPage = () => {
@@ -106,7 +107,7 @@ const MainPage = () => {
             <img src={baseballImg} style={{ height: "30px", paddingRight: "30px" }}/>
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
-        <BarItemStyle >
+        <BarItemStyle id ="barItem">
             {current === '' ? <h1>Welcome to our Baseball DB!</h1> : current === "schedule" ? <Schedule /> : current === "score" ? <ScoreBoard teams={teams} /> : <TeamMember players={players} captain={captain} managers={managers}/>}
         </BarItemStyle >
       </>
