@@ -8,6 +8,34 @@ import { positions } from "./data/data_positions.js"
 
 const NAME_LANGUAGE = 'chinese'
 
+class Game {
+    constructor( teamNames, players, canPositions ) {
+        // set basic info
+        let battleTeam = randomChooseMany( teamNames, 2 )
+        this.GID = get_GID()
+        this.GameDate = '2022-' + String( randChoose( range( 1, 13 ) ) ) + '-' + String( randChoose( range( 1, 31 ) ) )
+        this.HomeTeam = battleTeam[0]
+        this.HomeScore = 0
+        this.AwayTeam = battleTeam[1]
+        this.AwayScore = 0
+    }
+
+    line_up() {
+        // get line up of team
+        let Homeplayers = players.filter( ( player ) => { return ( player.Team == this.HomeTeam ) } )
+        console.log( Homeplayers )
+    }
+
+    playGame() {
+        // play game 
+    }
+
+    get_hit_record() {}
+
+    get_attendance() {}
+
+}
+
 const randChoose = ( lst ) => {
     let choice = lst[( Math.random() * lst.length ) | 0]
     return choice
@@ -40,6 +68,13 @@ const get_SID = () => {
     let SID = 'B099' + String( SID_NUM ).padStart( 5, '0' )
     SID_NUM += 1
     return SID
+}
+
+let GID_NUM = 0
+const get_GID = () => {
+    let GID = GID_NUM
+    GID_NUM += 1
+    return GID
 }
 
 const get_phone = () => {
@@ -129,8 +164,8 @@ const get_test_case = () => {
         }
     }
 
-    console.log( canPositions )
-
+    let game = new Game( teamNames, players, canPositions )
+    game.line_up()
     return {
         players: players,
         teams: teams,
