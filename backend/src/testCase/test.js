@@ -9,18 +9,23 @@ const test = async () => {
         database: 'baseball'
     } )
 
-    let teamPlayers = []
     let teamName = '富邦悍將'
     sql_con.connect( ( err ) => {
         if ( err ) throw err
         console.log( "MYSQL connected!" )
 
-        let sql = `SELECT * FROM Player WHERE Player.Team = '${teamName}'`
+        let sql = `SELECT
+                        *
+                    FROM
+                        team
+                        INNER JOIN player ON team.Captain = player.SID
+                    WHERE
+                        TName = '${teamName}'`
+
         sql_con.query( sql, ( err, result ) => {
             if ( err ) throw err
-            teamPlayers = result
-            console.log( teamPlayers[0].SID )
-            console.log( teamPlayers.length )
+            let teamCaptain = result[0]
+            console.log( teamCaptain )
             // sendData( clientWS, ['rp_get_teams', teamNames] )
         } )
 
