@@ -31,8 +31,8 @@ const BarItemStyle = styled.div`
 `
 
 const MainPage = () => {
-  const { items, teams, getTeams, getPeople } = useBaseball();
-  const [current, setCurrent] = useState('schedule');
+  const { items, teams, players, getTeams, getPeople, get_schedule } = useBaseball();
+  const [current, setCurrent] = useState('');
 
   useEffect(()=>{
     console.log(items);
@@ -45,36 +45,49 @@ const MainPage = () => {
 
     switch (e.key){
       case "富邦悍將": {
+        await getPeople("富邦悍將", "captain")
         await getPeople("富邦悍將", "players")
+        await getPeople("富邦悍將", "managers")
         break;
       }
 
       case "統一獅": {
+        await getPeople("統一獅", "captain")
         await getPeople("統一獅", "players")
+        await getPeople("統一獅", "managers")
         break;
       }
 
       case "樂天桃猿": {
+        await getPeople("樂天桃猿", "captain")
         await getPeople("樂天桃猿", "players")
+        await getPeople("樂天桃猿", "managers")
         break;
       }
 
       case "味全龍": {
+        await getPeople("味全龍", "captain")
         await getPeople("味全龍", "players")
+        await getPeople("味全龍", "managers")
         break;
       }
 
       case "中信兄弟": {
+        await getPeople("中信兄弟", "captain")
         await getPeople("中信兄弟", "players")
+        await getPeople("中信兄弟", "managers")
         break;
       }
 
       case "台鋼雄鷹": {
+        await getPeople("台鋼雄鷹", "captain")
         await getPeople("台鋼雄鷹", "players")
+        await getPeople("台鋼雄鷹", "managers")
         break;
       }
 
       case "schedule": {
+        await get_schedule(2022, 12)
         break;
       }
 
@@ -93,7 +106,7 @@ const MainPage = () => {
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
         <BarItemStyle >
-            {current === "schedule" ? <Schedule /> : current === "score" ? null : <TeamMember/>}
+            {current === '' ? <h1>Welcome to our Baseball DB!</h1> : current === "schedule" ? <Schedule /> : current === "score" ? null : <TeamMember players={players}/>}
         </BarItemStyle >
       </>
     )

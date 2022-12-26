@@ -1,11 +1,7 @@
 import { useState, createContext, useContext, useEffect } from "react";
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 
-const client = new WebSocket('ws://192.168.1.154:4000/')
-
-client.onopen = () => {
-    sendData(["get_teams"]);
-}
+const client = new WebSocket('ws://192.168.88.103:4000/')
 
 
 const sendData = async (data) => {
@@ -29,6 +25,9 @@ const BaseballContext = createContext(
 
       managers: [],
       setManagers: () => {},
+
+      games: [],
+      setGames: () => {},
 
       getTeams: () => {},
 
@@ -89,6 +88,7 @@ const BaseballProvider = (props) => {
     const [players, setPlayers] = useState([]);
     const [captain, setCaptain] = useState([]);
     const [managers, setManagers] = useState([]);
+    const [games, setGames] = useState([]);
 
 
 
@@ -117,8 +117,8 @@ const BaseballProvider = (props) => {
         }
     }
 
-    const get_schedule = () => {
-        sendData(["get_schedule", ])
+    const get_schedule = (year, month) => {
+        sendData(["get_games", [year, month]])
     }
 
     const get_score = () => {
@@ -151,6 +151,12 @@ const BaseballProvider = (props) => {
                 setManagers(payload);
                 break;
             }
+
+            case "rp_get_games": {
+                console.log(payload);
+                setGames(payload);
+                break;
+            }
         }
     }
 
@@ -159,8 +165,10 @@ const BaseballProvider = (props) => {
             value={{
                 items,
                 teams,
+                players,
                 getTeams,
                 getPeople,
+                get_schedule,
             }}
             {...props}
         />
