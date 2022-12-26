@@ -31,7 +31,7 @@ const BarItemStyle = styled.div`
 `
 
 const MainPage = () => {
-  const { items, teams, players, getTeams, getPeople, get_schedule } = useBaseball();
+  const { items, teams, players, captain, managers, getTeams, getPeople, get_schedule } = useBaseball();
   const [current, setCurrent] = useState('');
 
   useEffect(()=>{
@@ -106,7 +106,7 @@ const MainPage = () => {
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
         <BarItemStyle >
-            {current === '' ? <h1>Welcome to our Baseball DB!</h1> : current === "schedule" ? <Schedule /> : current === "score" ? null : <TeamMember players={players}/>}
+            {current === '' ? <h1>Welcome to our Baseball DB!</h1> : current === "schedule" ? <Schedule /> : current === "score" ? null : <TeamMember players={players} captain={captain} managers={managers}/>}
         </BarItemStyle >
       </>
     )

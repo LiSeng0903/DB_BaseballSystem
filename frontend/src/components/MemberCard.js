@@ -10,7 +10,7 @@ const CardStyle = styled(Card)`
     margin: 10px;
     width: 30%;
 `
-const MemberCard = ({player}) => {
+const MemberCard = ({member}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -24,18 +24,20 @@ const MemberCard = ({player}) => {
         setIsModalOpen(false);
     };
 
+    console.log( "JerNum",member.JerNum )
+
 
     return (
         <>
-            <CardStyle title={player.JerNum} hoverable onClick={() => showModal()}>
-                <h3>{player.Pname}</h3>
+            <CardStyle title={member.JerNum?member.JerNum:'manager'} hoverable onClick={() => showModal()}>
+                <h3>{member.Pname}</h3>
             </ CardStyle>
             <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>系級：{player.Dept + player.Grade}</p>
-                <p>學號：{player.SID}</p>
-                <p>性別：{player.Sex}</p>
-                <p>是否為OB：{player.IsOB}</p>
-                <p>守位：{player.position}</p>
+                <p>系級：{member.Dept + member.Grade}</p>
+                <p>學號：{member.SID}</p>
+                <p>性別：{member.Sex}</p>
+                <p>是否為OB：{member.IsOB}</p>
+                <p>守位：{member.position}</p>
             </Modal>
          </>
     )
