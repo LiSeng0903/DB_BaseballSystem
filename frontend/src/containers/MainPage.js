@@ -106,7 +106,7 @@ const MainPage = () => {
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
         <BarItemStyle >
-            {current === '' ? <h1>Welcome to our Baseball DB!</h1> : current === "schedule" ? <Schedule /> : current === "score" ? <ScoreBoard teams={teams}/> : <TeamMember players={players} captain={captain} managers={managers}/>}
+            {current === '' ? <h1>Welcome to our Baseball DB!</h1> : current === "schedule" ? <Schedule /> : current === "score" ? <ScoreBoard teams={teams} /> : <TeamMember players={players} captain={captain} managers={managers}/>}
         </BarItemStyle >
       </>
     )
