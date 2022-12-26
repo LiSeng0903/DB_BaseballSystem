@@ -31,7 +31,6 @@ const ScoreBoard = ({teams}) =>{
         setIsModalOpen(false);
     };
 
-    //console.log("h",historyGames)
     return(
         <CollapseStyle accordion>
             {teams.map((team) => (
