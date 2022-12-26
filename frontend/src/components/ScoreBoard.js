@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Collapse, Space, Table, Tag, Card} from 'antd';
 import styled from 'styled-components'
 import { useBaseball } from '../containers/hooks/useBaseball';
@@ -14,11 +14,13 @@ const CollapseStyle = styled(Collapse)`
   
 const ScoreBoard = ({teams}) =>{
     const { scores, historyGames, get_score } = useBaseball();
-    console.log("h",scores)
+
     return(
         <CollapseStyle accordion>
-            {teams.map((team) => (
-                <Panel header={team} onClick={()=>{get_score(team)}}>
+            {teams.map((team, i) => (
+                <Panel header={team} onClick={()=>{
+                    get_score(team)
+                }}>
                     <Table dataSource={[scores]} pagination={false}>
                         <Column title="總場數" dataIndex="total" />
                         <Column title="勝" dataIndex="win" />
