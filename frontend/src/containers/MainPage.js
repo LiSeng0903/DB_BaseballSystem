@@ -87,7 +87,8 @@ const MainPage = () => {
       }
 
       case "schedule": {
-        await get_schedule(2022, 12)
+        const date = new Date()
+        await get_schedule(date.getFullYear(), date.getMonth()+1)
         break;
       }
 

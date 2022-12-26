@@ -168,7 +168,6 @@ const BaseballProvider = (props) => {
             }
 
             case "rp_get_score": {
-                console.log(payload)
                 const [scores, historyGames] = payload;
                 setScores(scores);
                 setHistoryGames(historyGames);
@@ -185,6 +184,7 @@ const BaseballProvider = (props) => {
                 players,
                 captain,
                 managers,
+                games,
                 getTeams,
                 getPeople,
                 get_schedule,
