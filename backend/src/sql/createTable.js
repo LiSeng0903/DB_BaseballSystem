@@ -19,7 +19,8 @@ addTable_con.connect( function ( err ) {
             Grade VARCHAR(255),
             Sex VARCHAR(255),
             JerNum INT,
-            Team VARCHAR(255) 
+            Team VARCHAR(255),
+            FOREIGN KEY(Team) REFERENCES Team(TName)
         )`,
 
         `CREATE TABLE Team (
@@ -33,7 +34,8 @@ addTable_con.connect( function ( err ) {
             Dept VARCHAR(255),
             Grade VARCHAR(255),
             Sex VARCHAR(255),
-            Team VARCHAR(255) 
+            Team VARCHAR(255),
+            FOREIGN KEY(Team) REFERENCES Team(TName)
         )`,
 
         `CREATE TABLE GAME(

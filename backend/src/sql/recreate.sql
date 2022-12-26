@@ -1,20 +1,23 @@
 DROP DATABASE baseball;
-CREATE DATABASE baseball; 
-use baseball;
 
-CREATE TABLE Player ( 
+CREATE DATABASE baseball;
+
+USE baseball;
+
+CREATE TABLE Team (
+    TName VARCHAR(255) PRIMARY KEY,
+    Captain VARCHAR(255)
+);
+
+CREATE TABLE Player (
     SID VARCHAR(255) PRIMARY KEY,
     PName VARCHAR(255),
     Dept VARCHAR(255),
     Grade VARCHAR(255),
     Sex VARCHAR(255),
     JerNum INT,
-    Team VARCHAR(255) 
-);
-
-CREATE TABLE Team (
-    TName VARCHAR(255) PRIMARY KEY,
-    Captain VARCHAR(255)
+    Team VARCHAR(255),
+    FOREIGN KEY(Team) REFERENCES Team(TName)
 );
 
 CREATE TABLE Manager(
@@ -23,12 +26,13 @@ CREATE TABLE Manager(
     Dept VARCHAR(255),
     Grade VARCHAR(255),
     Sex VARCHAR(255),
-    Team VARCHAR(255) 
+    Team VARCHAR(255),
+    FOREIGN KEY(Team) REFERENCES Team(TName)
 );
 
 CREATE TABLE GAME(
     GID INT PRIMARY KEY,
-    GameDate DATE, 
+    GameDate DATE,
     HomeTeam VARCHAR(255),
     HomeScore INT,
     AwayTeam VARCHAR(255),

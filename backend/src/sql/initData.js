@@ -17,21 +17,31 @@ init_con.connect( ( err ) => {
     // team
     for ( let i = 0; i < teams.length; i++ ) {
         init_con.query( `INSERT INTO Team( TName, Captain )
-                         VALUES ('${teams[i].TName}', '${teams[i].Captain}')`,
+        VALUES ('${teams[i].TName}', '${teams[i].Captain}')`,
             ( err, result ) => {
                 if ( err ) throw err
             } )
     }
+    console.log( "Team data init" )
 
     // player 
     for ( let i = 0; i < players.length; i++ ) {
         init_con.query( `INSERT INTO Player( SID, PName, Dept, Grade, Sex, JerNum, Team)
-                         VALUES ('${players[i].SID}', '${players[i].PName}', '${players[i].Dept}', '${players[i].Grade}', '${players[i].Sex}', ${players[i].JerNum}, '${players[i].Team}')`,
+        VALUES ('${players[i].SID}', '${players[i].PName}', '${players[i].Dept}', '${players[i].Grade}', '${players[i].Sex}', ${players[i].JerNum}, '${players[i].Team}')`,
             ( err, result ) => {
                 if ( err ) throw err
             } )
-
     }
+    console.log( "Player data init" )
+
+    for ( let i = 0; i < managers.length; i++ ) {
+        init_con.query( `INSERT INTO Manager( SID, PName, Dept, Grade, Sex, Team)
+        VALUES ('${players[i].SID}', '${players[i].PName}', '${players[i].Dept}', '${players[i].Grade}', '${players[i].Sex}', '${players[i].Team}')`,
+            ( err, result ) => {
+                if ( err ) throw err
+            } )
+    }
+    console.log( "Manager data init" )
 
     init_con.end()
 } )
