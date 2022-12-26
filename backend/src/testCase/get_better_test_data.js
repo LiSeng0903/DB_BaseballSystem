@@ -308,8 +308,6 @@ const get_test_case = () => {
     }
 }
 
-console.log( get_test_case() )
-
 module.exports = {
     get_test_case: get_test_case
 }

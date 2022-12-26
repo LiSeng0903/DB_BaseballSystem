@@ -1,17 +1,17 @@
 let mysql = require( 'mysql' )
 
-let con = mysql.createConnection( {
+let addTable_con = mysql.createConnection( {
     host: "localhost",
     user: "root",
     password: "11111111",
     database: 'baseball'
 } )
 
-con.connect( function ( err ) {
+addTable_con.connect( function ( err ) {
     if ( err ) throw err
     console.log( "Connected!" )
 
-    let sqls = [
+    let addTable_sqls = [
         `CREATE TABLE Player ( 
             SID VARCHAR(255) PRIMARY KEY,
             PName VARCHAR(255),
@@ -81,12 +81,12 @@ con.connect( function ( err ) {
         )`
     ]
 
-    for ( let i = 0; i < sqls.length; i++ ) {
-        con.query( sqls[i], ( err, result ) => {
+    for ( let i = 0; i < addTable_sqls.length; i++ ) {
+        addTable_con.query( addTable_sqls[i], ( err, result ) => {
             if ( err ) throw err
             console.log( 'create table' )
         } )
     }
 
-    con.end()
+    addTable_con.end()
 } )
