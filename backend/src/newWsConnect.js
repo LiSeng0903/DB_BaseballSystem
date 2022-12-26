@@ -141,7 +141,67 @@ const wsConnect = {
                         break
                     }
                     case 'get_score': {
-                        // not finish
+                        let teamName = payload
+
+                        sql_con.connect( ( err ) => {
+                            if ( err ) throw err
+                            console.log( "MYSQL connected!" )
+
+                            let sql = `SELECT
+                                            *,
+                                            YEAR(GameDate) AS year,
+                                            MONTH(GameDate) AS 'month',
+                                            DAY(GameDate) AS 'day'
+                                        FROM
+                                            Game
+                                        WHERE
+                                            HomeTeam = '${teamName}'
+                                            OR AwayTeam = '${teamName}'
+                                        ORDER BY
+                                            GameDate`
+
+                            sql_con.query( sql, ( err, result ) => {
+                                if ( err ) throw err
+                                let history = result
+
+                                let win = 0
+                                let lose = 0
+                                let tie = 0
+                                let winRate = 0
+
+                                for ( let i = 0; i < history.length; i++ ) {
+                                    // win 
+                                    if (
+                                        ( history[i].HomeTeam == teamName && history[i].HomeScore > history[i].AwayScore ) ||
+                                        ( history[i].AwayTeam == teamName && history[i].AwayScore > history[i].HomeScore ) ) {
+
+                                        win += 1
+                                    }
+                                    else if (
+                                        ( history[i].HomeTeam == teamName && history[i].HomeScore < history[i].AwayScore ) ||
+                                        ( history[i].AwayTeam == teamName && history[i].AwayScore < history[i].HomeScore ) ) {
+
+                                        lose += 1
+                                    }
+                                    else {
+                                        tie += 1
+                                    }
+                                }
+
+                                winRate = win / ( win + lose + tie )
+                                let score = {
+                                    win: win,
+                                    lose: lose,
+                                    tie: tie,
+                                    total: win + lose + tie,
+                                    winRate: winRate
+                                }
+
+                                sendData( clientWS, ['rp_get_score', [score, history]] )
+                            } )
+
+                            sql_con.end()
+                        } )
                         break
                     }
                     case 'get_hit_records': {

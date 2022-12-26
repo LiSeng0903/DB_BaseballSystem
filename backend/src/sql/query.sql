@@ -1,24 +1,12 @@
 SELECT
-    GID,
-    PAID,
-    Hitter,
-    PName AS Pitcher,
-    Result
+    *,
+    YEAR(GameDate) AS year,
+    MONTH(GameDate) AS 'month',
+    DAY(GameDate) AS 'day'
 FROM
-    (
-        SELECT
-            GID,
-            PAID,
-            PName AS Hitter,
-            Pitcher,
-            Result
-        FROM
-            HitRecord AS H
-            INNER JOIN Player AS P ON H.Hitter = P.SID
-    ) AS T
-    INNER JOIN Player AS Pl ON T.Pitcher = Pl.SID
+    Game
 WHERE
-    GID = 6
+    HomeTeam = '富邦悍將'
+    OR AwayTeam = '富邦悍將'
 ORDER BY
-    Pitcher,
-    Hitter
+    GameDate
