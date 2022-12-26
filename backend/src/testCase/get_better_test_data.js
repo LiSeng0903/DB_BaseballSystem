@@ -18,12 +18,54 @@ class Game {
         this.HomeScore = 0
         this.AwayTeam = battleTeam[1]
         this.AwayScore = 0
+
+        this.homeSIDs = []
+        this.awaySIDs = []
+        this.homeCanPos = []
+        this.AwayCanPos = []
+
+        this.homeLineUp = []
+        this.awayLineUp = []
+
+        for ( let i = 0; i < players.length; i++ ) {
+            if ( players[i].Team == this.HomeTeam ) {
+                this.homeSIDs.push( players[i].SID )
+            }
+            else if ( players[i].Team == this.AwayTeam ) {
+                this.awaySIDs.push( players[i].SID )
+            }
+        }
+
+        for ( let i = 0; i < canPositions.length; i++ ) {
+            if ( this.homeSIDs.includes( canPositions[i].SID ) ) {
+                this.homeCanPos.push( canPositions[i] )
+            }
+            else if ( this.awaySIDs.includes( canPositions[i].SID ) ) {
+                this.AwayCanPos.push( canPositions[i] )
+            }
+        }
     }
 
     line_up() {
-        // get line up of team
-        let Homeplayers = players.filter( ( player ) => { return ( player.Team == this.HomeTeam ) } )
-        console.log( Homeplayers )
+        for ( let i = 0; i < positions.length; i++ ) {
+            let curPos = positions[i]
+
+            for ( let i = 0; i < 1000; i++ ) {
+                let curCanP = randChoose( this.homeCanPos )
+                if ( curCanP.Position == curPos && this.homeLineUp.includes( curCanP.SID ) == false ) {
+                    this.homeLineUp.push( curCanP.SID )
+                    break
+                }
+            }
+            for ( let i = 0; i < 1000; i++ ) {
+                let curCanP = randChoose( this.AwayCanPos )
+                if ( curCanP.Position == curPos && this.awayLineUp.includes( curCanP.SID ) == false ) {
+                    this.awayLineUp.push( curCanP.SID )
+                    break
+                }
+            }
+        }
+        return
     }
 
     playGame() {
@@ -166,6 +208,8 @@ const get_test_case = () => {
 
     let game = new Game( teamNames, players, canPositions )
     game.line_up()
+    console.log( game.homeCanPos )
+    console.log( game.homeLineUp )
     return {
         players: players,
         teams: teams,
