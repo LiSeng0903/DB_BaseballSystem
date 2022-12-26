@@ -101,10 +101,10 @@ class Game {
                 while ( out < 3 ) {
                     PA += 1
                     let hitterSID = ( half == 0 ? this.homeLineUp[hitterIndex[half]] : this.awayLineUp[hitterIndex[half]] )
-                    hitterIndex[half] = ( hitterIndex[half] + 1 % 9 )
+                    hitterIndex[half] = ( hitterIndex[half] + 1 ) % 9
 
                     // Hit 
-                    let hitResult = randChoose( ['H', 'O', 'O'] )
+                    let hitResult = randChoose( ['H', 'H', 'O', 'O', 'O'] )
                     if ( hitResult == 'H' ) {
                         base += 1
                     }
@@ -282,7 +282,7 @@ const get_test_case = () => {
     }
 
     // play games 
-    for ( let i = 0; i < 100; i++ ) {
+    for ( let i = 0; i < 300; i++ ) {
         let game = new Game( teamNames, players, canPositions )
         game.playGame()
 
@@ -303,9 +303,9 @@ const get_test_case = () => {
         games: games,
         hitRecords: hitRecords,
         relatives: relatives,
-        attendance: attendances,
-        canPosition: canPositions
+        attendances: attendances,
+        canPositions: canPositions
     }
 }
 
-get_test_case()
+export { get_test_case }

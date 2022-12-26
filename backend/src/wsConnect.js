@@ -15,6 +15,9 @@ const end_req_msg = ( task ) => {
 const get_game_stat = async ( teamName ) => {
     let history = await Game.aggregate( [
         { $match: { $or: [{ HomeTeam: teamName }, { AwayTeam: teamName }] } },
+        { $addFields: { "year": { $year: '$GameDate' } } },
+        { $addFields: { "month": { $month: '$GameDate' } } },
+        { $addFields: { "day": { $dayOfMonth: '$GameDate' } } },
         { $sort: { GameDate: 1 } }
     ] )
 
