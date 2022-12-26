@@ -1,4 +1,4 @@
-const relations = ['父', '母', '兄', '弟', '姊', '妹']
+const relations = ['父', '母', '祖父', '祖母']
 
 module.exports = {
     relations: relations

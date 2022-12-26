@@ -24,6 +24,7 @@ init_con.connect( ( err ) => {
     } )
     console.log( "Team data init" )
 
+
     // player 
     let Player_init_sql = 'INSERT INTO Player( SID, PName, Dept, Grade, Sex, JerNum, Team ) VALUES'
     for ( let i = 0; i < players.length; i++ ) {
@@ -33,6 +34,7 @@ init_con.connect( ( err ) => {
         if ( err ) throw err
     } )
     console.log( "Player data init" )
+
 
     // manager 
     let Manager_init_sql = 'INSERT INTO Manager( SID, PName, Dept, Grade, Sex, Team ) VALUES'
@@ -44,6 +46,7 @@ init_con.connect( ( err ) => {
     } )
     console.log( "Manager data init" )
 
+
     // game 
     let Game_init_sql = 'INSERT INTO Game( GID, GameDate, HomeTeam, HomeScore, AwayTeam, AwayScore ) VALUES'
     for ( let i = 0; i < games.length; i++ ) {
@@ -54,6 +57,7 @@ init_con.connect( ( err ) => {
     } )
     console.log( "Game data init" )
 
+
     // hit record 
     let HitRecord_init_sql = 'INSERT INTO HitRecord( GID, PAID, Result, Pitcher, Hitter ) VALUES'
     for ( let i = 0; i < hitRecords.length; i++ ) {
@@ -63,6 +67,38 @@ init_con.connect( ( err ) => {
         if ( err ) throw err
     } )
     console.log( "HitRecord data init" )
+
+
+    // relative
+    let Relative_init_sql = 'INSERT INTO Relative( SID, Relation, Phone, Name ) VALUES'
+    for ( let i = 0; i < relatives.length; i++ ) {
+        Relative_init_sql += `( '${relatives[i].SID}', '${relatives[i].Relation}', '${relatives[i].Phone}', '${relatives[i].Name}')${i == relatives.length - 1 ? ';' : ','}`
+    }
+    init_con.query( Relative_init_sql, ( err, result ) => {
+        if ( err ) throw err
+    } )
+    console.log( "Relative data init" )
+
+
+    // attendance 
+    let Attendance_init_sql = 'INSERT INTO Attendance( GID, SID, Position ) VALUES'
+    for ( let i = 0; i < attendances.length; i++ ) {
+        Attendance_init_sql += `( ${attendances[i].GID}, '${attendances[i].SID}', '${attendances[i].Position}' )${i == attendances.length - 1 ? ';' : ','}`
+    }
+    init_con.query( Attendance_init_sql, ( err, result ) => {
+        if ( err ) throw err
+    } )
+    console.log( "Attendance data init" )
+
+    // can position 
+    let CanPosition_init_sql = 'INSERT INTO CanPosition( SID, Position ) VALUES'
+    for ( let i = 0; i < canPositions.length; i++ ) {
+        CanPosition_init_sql += `( '${canPositions[i].SID}', '${canPositions[i].Position}')${i == canPositions.length - 1 ? ';' : ','}`
+    }
+    init_con.query( CanPosition_init_sql, ( err, result ) => {
+        if ( err ) throw err
+    } )
+    console.log( "CanPosition data init" )
 
     init_con.end()
 } )
