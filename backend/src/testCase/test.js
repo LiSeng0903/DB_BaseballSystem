@@ -8,30 +8,41 @@ const test = async () => {
         password: "11111111",
         database: 'baseball'
     } )
-    let [year, month] = [2022, 6]
+    let GID = 5
 
     sql_con.connect( ( err ) => {
         if ( err ) throw err
         console.log( "MYSQL connected!" )
 
-
         let sql = `SELECT
-                        *,
-                        YEAR(GameDate) AS year,
-                        MONTH(GameDate) AS 'month',
-                        DAY(GameDate) AS 'day'
+                        GID,
+                        PAID,
+                        Hitter,
+                        PName AS Pitcher,
+                        Result
                     FROM
-                        Game
+                        (
+                            SELECT
+                                GID,
+                                PAID,
+                                PName AS Hitter,
+                                Pitcher,
+                                Result
+                            FROM
+                                HitRecord AS H
+                                INNER JOIN Player AS P ON H.Hitter = P.SID
+                        ) AS T
+                        INNER JOIN Player AS Pl ON T.Pitcher = Pl.SID
                     WHERE
-                        MONTH(GameDate) = ${month}
-                        AND year(GameDate) = ${year}
+                        GID = ${GID}
                     ORDER BY
-                        GameDate`
+                        Pitcher,
+                        Hitter`
 
         sql_con.query( sql, ( err, result ) => {
             if ( err ) throw err
-            let games = result
-            console.log( games )
+            let hitRecords = result
+            console.log( hitRecords )
             // sendData( clientWS, ['rp_get_teams', teamNames] )
         } )
 

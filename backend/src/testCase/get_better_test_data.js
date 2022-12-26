@@ -92,10 +92,10 @@ class Game {
 
         // play game 
         let PA = 0
+        let hitterIndex = [0, 0]
         for ( let inning = 1; inning <= 9; inning++ ) {
             for ( let half = 0; half < 2; half++ ) {
                 let out = 0
-                let hitterIndex = [0, 0]
                 let pitcherSID = ( half == 0 ? this.awayLineUp[0] : this.homeLineUp[0] )
                 let base = 0
                 while ( out < 3 ) {

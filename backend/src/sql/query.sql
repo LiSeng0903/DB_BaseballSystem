@@ -1,12 +1,24 @@
 SELECT
-    *,
-    YEAR(GameDate) AS year,
-    MONTH(GameDate) AS 'month',
-    DAY(GameDate) AS 'day'
+    GID,
+    PAID,
+    Hitter,
+    PName AS Pitcher,
+    Result
 FROM
-    Game
+    (
+        SELECT
+            GID,
+            PAID,
+            PName AS Hitter,
+            Pitcher,
+            Result
+        FROM
+            HitRecord AS H
+            INNER JOIN Player AS P ON H.Hitter = P.SID
+    ) AS T
+    INNER JOIN Player AS Pl ON T.Pitcher = Pl.SID
 WHERE
-    MONTH(GameDate) = 6
-    AND year(GameDate) = 2022
+    GID = 6
 ORDER BY
-    GameDate
+    Pitcher,
+    Hitter
