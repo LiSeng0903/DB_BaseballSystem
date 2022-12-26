@@ -1,75 +1,31 @@
 import React from 'react';
 import { Badge, Calendar } from 'antd';
 
-const getListData = (value) => {
-  let listData;
-  switch (value.date()) {
-    case 8:
-      listData = [
-        {
-          type: 'warning',
-          content: 'A vs. B',
-        },
-        {
-          type: 'success',
-          content: 'B vs C',
-        },
-      ];
-      break;
-    case 10:
-      listData = [
-        {
-          type: 'warning',
-          content: 'This is warning event.',
-        },
-        {
-          type: 'success',
-          content: 'This is usual event.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event.',
-        },
-      ];
-      break;
-    case 15:
-      listData = [
-        {
-          type: 'warning',
-          content: 'This is warning event',
-        },
-        {
-          type: 'success',
-          content: 'This is very long usual event。。....',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 1.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 2.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 3.',
-        },
-        {
-          type: 'error',
-          content: 'This is error event 4.',
-        },
-      ];
-      break;
-    default:
-  }
-  return listData || [];
-};
+import { useBaseball } from '../containers/hooks/useBaseball';
+
+const getListData = (value, games) => {
+    let listData = [];
+    const date = Number(value.date())
+    const month = Number(value.month()) + 1
+    for ( let i = 0 ; i < games.length ; i++){
+      if (date == games[i].day && month == games[i].month){
+        listData.push(
+          {
+            type: 'success',
+            content: `${games[i].HomeTeam} vs. ${games[i].AwayTeam}`
+          }
+        )
+      }
+    }
+    return listData;
+}
+
+
 const getMonthData = (value) => {
-  if (value.month() === 8) {
-    return 1394;
-  }
 };
 const Schedule = () => {
+  const { games, get_schedule } = useBaseball();
+
   const monthCellRender = (value) => {
     const num = getMonthData(value);
     return num ? (
@@ -79,8 +35,9 @@ const Schedule = () => {
       </div>
     ) : null;
   };
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
+
+  const dateCellRender = (value, games) => {
+    const listData = getListData(value,games);
     return (
       <ul className="events">
         {listData.map((item) => (
@@ -91,6 +48,15 @@ const Schedule = () => {
       </ul>
     );
   };
-  return <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />;
-};
+
+  return <Calendar 
+    dateCellRender={(value)=>{
+      return dateCellRender(value, games)}} 
+    monthCellRender={(value)=>{
+      return monthCellRender(value, games)}}
+    onPanelChange={(value)=>{
+      get_schedule(Number(value.year()), Number(value.month()) + 1)
+    }}
+      />;
+    };
 export default Schedule;

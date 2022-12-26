@@ -1,12 +1,40 @@
 // import data 
-import { depts } from "./data_depts.js"
-import { teams as teamNames } from './data_teams.js'
-import { chinese_names } from './data_chinese_names.js'
-import { english_names } from './data_english_names.js'
-import { relations } from "./data_relations.js"
-import { positions } from "./data_positions.js"
+import { depts } from "./data/data_depts.js"
+import { teams as teamNames } from './data/data_teams.js'
+import { chinese_names } from './data/data_chinese_names.js'
+import { english_names } from './data/data_english_names.js'
+import { relations } from "./data/data_relations.js"
+import { positions } from "./data/data_positions.js"
 
 const NAME_LANGUAGE = 'chinese'
+
+class Game {
+    constructor( teamNames, players, canPositions ) {
+        // set basic info
+        let battleTeam = randomChooseMany( teamNames, 2 )
+        this.GID = get_GID()
+        this.GameDate = '2022-' + String( randChoose( range( 1, 13 ) ) ) + '-' + String( randChoose( range( 1, 31 ) ) )
+        this.HomeTeam = battleTeam[0]
+        this.HomeScore = 0
+        this.AwayTeam = battleTeam[1]
+        this.AwayScore = 0
+    }
+
+    line_up() {
+        // get line up of team
+        let Homeplayers = players.filter( ( player ) => { return ( player.Team == this.HomeTeam ) } )
+        console.log( Homeplayers )
+    }
+
+    playGame() {
+        // play game 
+    }
+
+    get_hit_record() {}
+
+    get_attendance() {}
+
+}
 
 const randChoose = ( lst ) => {
     let choice = lst[( Math.random() * lst.length ) | 0]
@@ -40,6 +68,13 @@ const get_SID = () => {
     let SID = 'B099' + String( SID_NUM ).padStart( 5, '0' )
     SID_NUM += 1
     return SID
+}
+
+let GID_NUM = 0
+const get_GID = () => {
+    let GID = GID_NUM
+    GID_NUM += 1
+    return GID
 }
 
 const get_phone = () => {
@@ -129,8 +164,8 @@ const get_test_case = () => {
         }
     }
 
-    console.log( canPositions )
-
+    let game = new Game( teamNames, players, canPositions )
+    game.line_up()
     return {
         players: players,
         teams: teams,

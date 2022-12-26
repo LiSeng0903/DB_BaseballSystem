@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
-import { chinese_names } from './data_chinese_names.js'
-import { english_names } from './data_english_names.js'
-import { depts } from "./data_depts.js"
-import { teams as teamNames } from './data_teams.js'
-import { Player, Team, Manager, Game, HitRecord, Relatives, Attendance, CanPosition } from '../model/models.js'
+import { chinese_names } from './data/data_chinese_names.js'
+import { english_names } from './data/data_english_names.js'
+import { depts } from "./data/data_depts.js"
+import { teams as teamNames } from './data/data_teams.js'
+import { Player, Team, Manager, Game, HitRecord, Relatives, Attendance, CanPosition } from '../../model/models.js'
 
 const PLAYER_CNT = 300
 const MANAGER_CNT = 50
@@ -35,7 +35,6 @@ const initData = async () => {
             Dept: randChoose( depts ),
             Grade: randChoose( range( 1, 5 ) ),
             Sex: randChoose( ['男', '女', '其他'] ),
-            IsOB: randChoose( [true, false] ),
             JerNum: randChoose( range( 1, 100 ) ),
             Team: teamNames[i]
         } )
@@ -47,7 +46,6 @@ const initData = async () => {
             Dept: randChoose( depts ),
             Grade: randChoose( range( 1, 5 ) ),
             Sex: randChoose( ['男', '女', '其他'] ),
-            IsOB: randChoose( [true, false] ),
             JerNum: randChoose( range( 1, 100 ) ),
             Team: randChoose( teamNames )
         } )
@@ -82,12 +80,13 @@ const initData = async () => {
     await Manager.deleteMany( {} )
     await Manager.insertMany( managers )
 
-    // GameSchema
+    // Game
     let games = []
     for ( let i = 0; i < GAME_CNT; i++ ) {
         games.push( {
             GID: i,
-            Date: '2022-' + String( randChoose( range( 10, 13 ) ) ) + '-' + String( randChoose( range( 1, 32 ) ) ),
+            GameDate: '2022-' + String( randChoose( range( 10, 13 ) ) ) + '-' + String( randChoose( range( 1, 32 ) ) ),
+            GameDate: '2022-' + String( randChoose( range( 10, 13 ) ) ) + '-' + String( randChoose( range( 1, 32 ) ) ),
             HomeTeam: randChoose( teamNames ),
             HomeScore: randChoose( range( 0, 10 ) ),
             AwayTeam: randChoose( teamNames ),
