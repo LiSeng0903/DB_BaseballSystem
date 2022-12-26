@@ -2,10 +2,19 @@ import { Player, Team, Manager, Game, HitRecord, Relatives, Attendance, CanPosit
 
 const test = async () => {
     console.log( 'start testing' )
-    let teamName = '富邦悍將'
-    let targetTeam = await Team.findOne( { TName: teamName } )
-    let captain = await Player.findOne( { SID: targetTeam.Captain } )
-    console.log( captain )
+
+    let year = 2022
+    let month = 12
+    let games = await Game.aggregate( [
+        { $addFields: { "month": { $month: '$GameDate' } } },
+        { $addFields: { "year": { $year: '$GameDate' } } },
+        { $match: { year: year } },
+        { $match: { month: month } },
+        { $sort: { GameDate: 1 } }
+    ] )
+    console.log( games )
+    console.log( games.length )
+
     console.log( 'finish testing' )
 }
 

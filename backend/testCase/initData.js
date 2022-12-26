@@ -82,12 +82,13 @@ const initData = async () => {
     await Manager.deleteMany( {} )
     await Manager.insertMany( managers )
 
-    // GameSchema
+    // Game
     let games = []
     for ( let i = 0; i < GAME_CNT; i++ ) {
         games.push( {
             GID: i,
-            Date: '2022-' + String( randChoose( range( 10, 13 ) ) ) + '-' + String( randChoose( range( 1, 32 ) ) ),
+            GameDate: '2022-' + String( randChoose( range( 10, 13 ) ) ) + '-' + String( randChoose( range( 1, 32 ) ) ),
+            GameDate: '2022-' + String( randChoose( range( 10, 13 ) ) ) + '-' + String( randChoose( range( 1, 32 ) ) ),
             HomeTeam: randChoose( teamNames ),
             HomeScore: randChoose( range( 0, 10 ) ),
             AwayTeam: randChoose( teamNames ),
