@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
-import { chinese_names } from './data_chinese_names.js'
-import { english_names } from './data_english_names.js'
-import { depts } from "./data_depts.js"
-import { teams as teamNames } from './data_teams.js'
-import { Player, Team, Manager, Game, HitRecord, Relatives, Attendance, CanPosition } from '../model/models.js'
+import { chinese_names } from './data/data_chinese_names.js'
+import { english_names } from './data/data_english_names.js'
+import { depts } from "./data/data_depts.js"
+import { teams as teamNames } from './data/data_teams.js'
+import { Player, Team, Manager, Game, HitRecord, Relatives, Attendance, CanPosition } from '../../model/models.js'
 
 const PLAYER_CNT = 300
 const MANAGER_CNT = 50

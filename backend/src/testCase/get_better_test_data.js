@@ -1,10 +1,10 @@
 // import data 
-import { depts } from "./data_depts.js"
-import { teams as teamNames } from './data_teams.js'
-import { chinese_names } from './data_chinese_names.js'
-import { english_names } from './data_english_names.js'
-import { relations } from "./data_relations.js"
-import { positions } from "./data_positions.js"
+import { depts } from "./data/data_depts.js"
+import { teams as teamNames } from './data/data_teams.js'
+import { chinese_names } from './data/data_chinese_names.js'
+import { english_names } from './data/data_english_names.js'
+import { relations } from "./data/data_relations.js"
+import { positions } from "./data/data_positions.js"
 
 const NAME_LANGUAGE = 'chinese'
 
