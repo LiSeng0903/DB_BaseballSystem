@@ -15,6 +15,9 @@ const end_req_msg = ( task ) => {
 const get_game_stat = async ( teamName ) => {
     let history = await Game.aggregate( [
         { $match: { $or: [{ HomeTeam: teamName }, { AwayTeam: teamName }] } },
+        { $addFields: { "year": { $year: '$GameDate' } } },
+        { $addFields: { "month": { $month: '$GameDate' } } },
+        { $addFields: { "day": { $dayOfMonth: '$GameDate' } } },
         { $sort: { GameDate: 1 } }
     ] )
 
@@ -91,8 +94,9 @@ const wsConnect = {
                         let [year, month] = payload
                         let games = await Game.aggregate( [
                             { $addFields: { "year": { $year: '$GameDate' } } },
-                            { $match: { year: year } },
                             { $addFields: { "month": { $month: '$GameDate' } } },
+                            { $addFields: { "day": { $dayOfMonth: '$GameDate' } } },
+                            { $match: { year: year } },
                             { $match: { month: month } },
                             { $sort: { GameDate: 1 } }
                         ] )
@@ -102,11 +106,12 @@ const wsConnect = {
                     }
                     case 'get_score': {
                         let teamName = payload
-                        let [[win, lose, tie, winRate], history] = get_game_stat( teamName )
+                        let [[win, lose, tie, winRate], history] = await get_game_stat( teamName )
                         let score = {
                             win: win,
                             lose: lose,
                             tie: tie,
+                            total: win + lose + tie,
                             winRate: winRate
                         }
 
