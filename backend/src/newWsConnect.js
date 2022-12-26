@@ -52,6 +52,22 @@ const wsConnect = {
                         break
                     }
                     case 'get_team_players': {
+                        let teamName = payload
+
+                        let teamPlayers = []
+                        sql_con.connect( ( err ) => {
+                            if ( err ) throw err
+                            console.log( "MYSQL connected!" )
+
+                            let sql = `SELECT * FROM Player WHERE Player.Team = '${teamName}'`
+                            sql_con.query( sql, ( err, result ) => {
+                                if ( err ) throw err
+                                teamPlayers = result
+                                sendData( clientWS, ['rp_get_team_players', teamPlayers] )
+                            } )
+
+                            sql_con.end()
+                        } )
                         break
                     }
                     case 'get_team_managers': {
