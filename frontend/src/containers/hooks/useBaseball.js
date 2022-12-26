@@ -184,10 +184,13 @@ const BaseballProvider = (props) => {
                 players,
                 captain,
                 managers,
+                scores,
+                historyGames,
                 games,
                 getTeams,
                 getPeople,
                 get_schedule,
+                get_score
             }}
             {...props}
         />
