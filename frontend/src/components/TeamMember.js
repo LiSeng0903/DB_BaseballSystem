@@ -1,6 +1,7 @@
 import MemberCard from "./MemberCard"
 import { useState, useEffect } from "react";
 import styled from "styled-components"
+import ScrollToTop from "react-scroll-to-top";
 
 const MemberWrapper=styled.div`
     display: flex;
@@ -41,6 +42,7 @@ const TeamMember =({ players, captain, managers }) => {
                 )
             })}
             </CardWrapper>
+            <ScrollToTop smooth />
         </MemberWrapper>
     )
 }

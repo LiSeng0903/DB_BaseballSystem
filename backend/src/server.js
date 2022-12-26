@@ -8,9 +8,9 @@ import { initData } from "./testCase/initData.js"
 import { wsConnect } from "./wsConnect.js"
 import { test } from "./testCase/webSocketTest.js"
 
-const INIT = false
+const INIT = true
 const TEST = false
-const SERVER_IP = '172.20.10.3'
+const SERVER_IP = 'localhost'
 
 mongo.connect()
 
