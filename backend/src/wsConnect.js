@@ -102,7 +102,7 @@ const wsConnect = {
                     }
                     case 'get_score': {
                         let teamName = payload
-                        let [[win, lose, tie, winRate], history] = get_game_stat( teamName )
+                        let [[win, lose, tie, winRate], history] = await get_game_stat( teamName )
                         let score = {
                             win: win,
                             lose: lose,
