@@ -12,6 +12,40 @@ const end_req_msg = ( task ) => {
     console.log( `[Finish req] ${task}` )
 }
 
+const get_game_stat = async ( teamName ) => {
+    let history = await Game.aggregate( [
+        { $match: { $or: [{ HomeTeam: teamName }, { AwayTeam: teamName }] } },
+        { $sort: { GameDate: 1 } }
+    ] )
+
+    let win = 0
+    let lose = 0
+    let tie = 0
+    let winRate = 0
+
+    for ( let i = 0; i < history.length; i++ ) {
+        // win 
+        if (
+            ( history[i].HomeTeam == teamName && history[i].HomeScore > history[i].AwayScore ) ||
+            ( history[i].AwayTeam == teamName && history[i].AwayScore > history[i].HomeScore ) ) {
+
+            win += 1
+        }
+        else if (
+            ( history[i].HomeTeam == teamName && history[i].HomeScore < history[i].AwayScore ) ||
+            ( history[i].AwayTeam == teamName && history[i].AwayScore < history[i].HomeScore ) ) {
+
+            lose += 1
+        }
+        else {
+            tie += 1
+        }
+    }
+
+    winRate = win / ( win + lose + tie )
+    return [[win, lose, tie, winRate], history]
+}
+
 const wsConnect = {
     onMessage: ( serverWS, clientWS ) => {
         return (
@@ -68,12 +102,13 @@ const wsConnect = {
                     }
                     case 'get_score': {
                         let teamName = payload
+                        let [[win, lose, tie, winRate], history] = get_game_stat( teamName )
                         let score = {
-                            win: 10,
-                            lost: 10,
-                            winRate: 10
+                            win: win,
+                            lose: lose,
+                            tie: tie,
+                            winRate: winRate
                         }
-                        let history = await Game.find( {} )
 
                         sendData( clientWS, ['rp_get_score', [score, history]] )
                         break
