@@ -19,6 +19,9 @@ class Game {
         this.AwayTeam = battleTeam[1]
         this.AwayScore = 0
 
+        this.hitRecord = []
+        this.attendance = []
+
         this.homeSIDs = []
         this.awaySIDs = []
         this.homeCanPos = []
@@ -64,17 +67,89 @@ class Game {
                     break
                 }
             }
+
+        }
+
+        for ( let i = 0; i < this.homeLineUp.length; i++ ) {
+            this.attendance.push( {
+                GID: this.GID,
+                SID: this.homeLineUp[i],
+                Position: positions[i]
+            } )
+
+            this.attendance.push( {
+                GID: this.GID,
+                SID: this.awayLineUp[i],
+                Position: positions[i]
+            } )
         }
         return
     }
 
     playGame() {
+        // line up
+        this.line_up()
+
         // play game 
+        let PA = 0
+        for ( let inning = 1; inning <= 9; inning++ ) {
+            for ( let half = 0; half < 2; half++ ) {
+                let out = 0
+                let hitterIndex = [0, 0]
+                let pitcherSID = ( half == 0 ? this.awayLineUp[0] : this.homeLineUp[0] )
+                let base = 0
+                while ( out < 3 ) {
+                    PA += 1
+                    let hitterSID = ( half == 0 ? this.homeLineUp[hitterIndex[half]] : this.awayLineUp[hitterIndex[half]] )
+                    hitterIndex[half] = ( hitterIndex[half] + 1 % 9 )
+
+                    // Hit 
+                    let hitResult = randChoose( ['H', 'O', 'O'] )
+                    if ( hitResult == 'H' ) {
+                        base += 1
+                    }
+                    else {
+                        out += 1
+                    }
+
+                    // Append result 
+                    this.hitRecord.push( {
+                        GID: this.GID,
+                        PAID: PA,
+                        Result: hitResult,
+                        Pitcher: pitcherSID,
+                        Hitter: hitterSID
+                    } )
+                }
+
+                if ( half == 0 ) {
+                    this.HomeScore += Math.max( base - 3, 0 )
+                }
+                else {
+                    this.AwayScore += Math.max( base - 3, 0 )
+                }
+            }
+        }
     }
 
-    get_hit_record() {}
+    get_hit_record() {
+        return this.hitRecord
+    }
 
-    get_attendance() {}
+    get_game() {
+        return {
+            GID: this.GID,
+            GameDate: this.GameDate,
+            HomeScore: this.HomeScore,
+            HomeTeam: this.HomeTeam,
+            AwayScore: this.AwayScore,
+            AwayTeam: this.AwayTeam,
+        }
+    }
+
+    get_attendance() {
+        return this.attendance
+    }
 
 }
 
@@ -207,9 +282,8 @@ const get_test_case = () => {
     }
 
     let game = new Game( teamNames, players, canPositions )
-    game.line_up()
-    console.log( game.homeCanPos )
-    console.log( game.homeLineUp )
+    game.playGame()
+    console.log( game.get_attendance() )
     return {
         players: players,
         teams: teams,
