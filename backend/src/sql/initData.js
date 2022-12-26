@@ -34,6 +34,7 @@ init_con.connect( ( err ) => {
     }
     console.log( "Player data init" )
 
+    // manager 
     for ( let i = 0; i < managers.length; i++ ) {
         init_con.query( `INSERT INTO Manager( SID, PName, Dept, Grade, Sex, Team)
         VALUES ('${players[i].SID}', '${players[i].PName}', '${players[i].Dept}', '${players[i].Grade}', '${players[i].Sex}', '${players[i].Team}')`,
@@ -42,6 +43,16 @@ init_con.connect( ( err ) => {
             } )
     }
     console.log( "Manager data init" )
+
+    // game 
+    for ( let i = 0; i < games.length; i++ ) {
+        init_con.query( `INSERT INTO Game( GID, GameDate, HomeTeam, HomeScore, AwayTeam, AwayScore)
+        VALUES (${games[i].GID}, '${games[i].GameDate}', '${games[i].HomeTeam}', ${games[i].HomeScore}, '${games[i].AwayTeam}', ${games[i].AwayScore})`,
+            ( err, result ) => {
+                if ( err ) throw err
+            } )
+    }
+    console.log( "Game data init" )
 
     init_con.end()
 } )

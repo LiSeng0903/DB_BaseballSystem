@@ -13,7 +13,7 @@ class Game {
         // set basic info
         let battleTeam = randomChooseMany( teamNames, 2 )
         this.GID = get_GID()
-        this.GameDate = '2022-' + String( randChoose( range( 1, 13 ) ) ) + '-' + String( randChoose( range( 1, 31 ) ) )
+        this.GameDate = '2022-' + String( randChoose( range( 1, 13 ) ) ).padStart( 2, '0' ) + '-' + String( randChoose( range( 1, 28 ) ) ).padStart( 2, '0' )
         this.HomeTeam = battleTeam[0]
         this.HomeScore = 0
         this.AwayTeam = battleTeam[1]
