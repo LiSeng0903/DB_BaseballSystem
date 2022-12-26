@@ -30,12 +30,12 @@ const ScoreBoard = ({teams}) =>{
         setIsModalOpen(false);
     };
 
-
-    //console.log("h",historyGames)
     return(
         <CollapseStyle accordion>
-            {teams.map((team) => (
-                <Panel header={team} onClick={()=>{get_score(team)}}>
+            {teams.map((team, i) => (
+                <Panel header={team} onClick={()=>{
+                    get_score(team)
+                }}>
                     <Table dataSource={[scores]} pagination={false}>
                         <Column title="總場數" dataIndex="total" />
                         <Column title="勝" dataIndex="win" />
