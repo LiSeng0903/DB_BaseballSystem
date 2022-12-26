@@ -1,24 +1,46 @@
 import { useState, createContext, useContext, useEffect } from "react";
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 
-const client = new WebSocket('ws://192.168.1.154:4000/')
+const client = new WebSocket('ws://192.168.88.103:4000/')
 
-client.onopen = () => {
-    sendData(["get_teams"]);
-}
 
 const sendData = async (data) => {
     await client.send(JSON.stringify(data));
 }
 
-const BaseballContext = createContext({
-    items: [],
-    teams: [],
-    players: [],
 
-})
+const BaseballContext = createContext(
+    {
+      items: [],
+      setItems: () => {},
+
+      teams: [],
+      setTeams: () => {},
+
+      players: [],
+      setPlayers: () => {},
+
+      captain: [],
+      setCaptain: () => {},
+
+      managers: [],
+      setManagers: () => {},
+
+      games: [],
+      setGames: () => {},
+
+      getTeams: () => {},
+
+      getPeople: () => {},
+
+      get_schedule: () => {},
+
+      get_score: () => {},
+    }
+)
 
 const BaseballProvider = (props) => {
+  
     const [items, setItems] = useState([
         {
           label: '球隊',
@@ -64,16 +86,47 @@ const BaseballProvider = (props) => {
       ])
     const [teams, setTeams] = useState([]);
     const [players, setPlayers] = useState([]);
+    const [captain, setCaptain] = useState([]);
+    const [managers, setManagers] = useState([]);
+    const [games, setGames] = useState([]);
 
+
+
+    // sending request
     const getTeams = () => {
         sendData(["get_teams"]);
         console.log("send request")
     }
 
-    const getTeamMembers = (teamName) => {
-        sendData(["getTeamMembers", teamName])
+    const getPeople = (teamName, type) => {
+        switch (type){
+            case "players": {
+                sendData(["get_team_players", teamName])
+                break;
+            }
+
+            case "captain": {
+                sendData(["get_team_captain", teamName])
+                break;
+            }
+
+            case "managers": {
+                sendData(["get_team_managers", teamName])
+                break;
+            }
+        }
     }
 
+    const get_schedule = (year, month) => {
+        sendData(["get_games", [year, month]])
+    }
+
+    const get_score = () => {
+        sendData(["get_score", ])
+    }
+
+
+    // receiving data
     client.onmessage = (byteString) => {
         const { data } = byteString;
         const [task, payload] = JSON.parse(data);
@@ -81,6 +134,27 @@ const BaseballProvider = (props) => {
         switch (task) {
             case "rp_get_teams": {
                 setTeams(payload);
+                break;
+            }
+
+            case "rp_get_team_players": {
+                setPlayers(payload);
+                break;
+            }
+
+            case "rp_get_team_captain": {
+                setCaptain(payload);
+                break;
+            }
+
+            case "rp_get_team_managers": {
+                setManagers(payload);
+                break;
+            }
+
+            case "rp_get_games": {
+                console.log(payload);
+                setGames(payload);
                 break;
             }
         }
@@ -91,7 +165,10 @@ const BaseballProvider = (props) => {
             value={{
                 items,
                 teams,
+                players,
                 getTeams,
+                getPeople,
+                get_schedule,
             }}
             {...props}
         />
