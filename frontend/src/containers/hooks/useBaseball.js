@@ -1,7 +1,7 @@
 import { useState, createContext, useContext, useEffect } from "react";
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 
-const client = new WebSocket('ws://172.20.10.3:4000/')
+const client = new WebSocket('ws://localhost:4000/')
 
 client.onopen = () => {
     sendData(["get_teams"])

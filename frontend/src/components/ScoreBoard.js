@@ -3,6 +3,7 @@ import { Collapse, Space, Table, Tag, Card, Modal} from 'antd';
 import styled from 'styled-components'
 import { useBaseball } from '../containers/hooks/useBaseball';
 import { useState, useEffect } from "react";
+import ScrollToTop from "react-scroll-to-top";
 
 const { Panel } = Collapse;
 const { Column, ColumnGroup } = Table;
@@ -30,12 +31,14 @@ const ScoreBoard = ({teams}) =>{
         setIsModalOpen(false);
     };
 
-
     //console.log("h",historyGames)
     return(
         <CollapseStyle accordion>
             {teams.map((team) => (
-                <Panel header={team} onClick={()=>{get_score(team)}}>
+                <Panel header={team} onClick={()=>{
+                    get_score(team);
+                    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+                    }}>
                     <Table dataSource={[scores]} pagination={false}>
                         <Column title="總場數" dataIndex="total" />
                         <Column title="勝" dataIndex="win" />
@@ -61,6 +64,7 @@ const ScoreBoard = ({teams}) =>{
                     </Modal>
                 </Panel>
             ))}
+            <ScrollToTop smooth />
         </CollapseStyle>
       );
 }

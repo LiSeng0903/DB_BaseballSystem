@@ -20,7 +20,6 @@ const getListData = (value, games) => {
     return listData;
 }
 
-
 const getMonthData = (value) => {
 };
 const Schedule = () => {
@@ -39,7 +38,7 @@ const Schedule = () => {
   const dateCellRender = (value, games) => {
     const listData = getListData(value,games);
     return (
-      <ul className="events">
+      <ul className="events" style={{listStyleType: "none", padding: "0px"}}>
         {listData.map((item) => (
           <li key={item.content}>
             <Badge status={item.type} text={item.content} />
@@ -49,13 +48,13 @@ const Schedule = () => {
     );
   };
 
-  return <Calendar 
-    dateCellRender={(value)=>{
-      return dateCellRender(value, games)}} 
-    monthCellRender={(value)=>{
-      return monthCellRender(value, games)}}
-    onPanelChange={(value)=>{
-      get_schedule(Number(value.year()), Number(value.month()) + 1)
+  return <Calendar style={{width:"90%"}}
+      dateCellRender={(value)=>{
+        return dateCellRender(value, games)}} 
+      monthCellRender={(value)=>{
+        return monthCellRender(value, games)}}
+      onPanelChange={(value)=>{
+        get_schedule(Number(value.year()), Number(value.month()) + 1)
     }}
       />;
     };
