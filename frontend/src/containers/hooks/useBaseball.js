@@ -3,11 +3,13 @@ import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/ico
 
 const client = new WebSocket('ws://192.168.88.103:4000/')
 
-
 const sendData = async (data) => {
     await client.send(JSON.stringify(data));
 }
 
+client.onopen = () => {
+    sendData(["get_teams"])
+}
 
 const BaseballContext = createContext(
     {

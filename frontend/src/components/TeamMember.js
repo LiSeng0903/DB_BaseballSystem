@@ -2,6 +2,12 @@ import MemberCard from "./MemberCard"
 import { useState, useEffect } from "react";
 import styled from "styled-components"
 
+const MemberWrapper=styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin: 3%;
+`
 const CardWrapper=styled.div`
     display: flex;
     width: 100%;
@@ -13,25 +19,29 @@ const TeamMember =({ players, captain, managers }) => {
     useEffect(() => {
 
     }, [])
-    console.log("p",players, "c",captain, "m",managers)
     return(
-        <CardWrapper>
-
+        <MemberWrapper>
             <h2>Captain</h2>
-            <MemberCard member={captain}/>
+            <CardWrapper>
+                <MemberCard member={captain}/>
+            </CardWrapper>
             <h2>Players</h2>
+            <CardWrapper>
             {players.map((player) => {
                 return (
                     <MemberCard member={player}/>
                 )
             })}
+            </CardWrapper>
             <h2>Manegers</h2>
+            <CardWrapper>
             {managers.map((manager) => {
                 return (
                     <MemberCard member={manager}/>
                 )
             })}
-        </CardWrapper>
+            </CardWrapper>
+        </MemberWrapper>
     )
 }
 

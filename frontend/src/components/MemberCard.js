@@ -24,19 +24,16 @@ const MemberCard = ({member}) => {
         setIsModalOpen(false);
     };
 
-    console.log( "JerNum",member.JerNum )
-
 
     return (
         <>
             <CardStyle title={member.JerNum?member.JerNum:'manager'} hoverable onClick={() => showModal()}>
-                <h3>{member.Pname}</h3>
+                <h3>{member.PName}</h3>
             </ CardStyle>
             <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <p>系級：{member.Dept + member.Grade}</p>
                 <p>學號：{member.SID}</p>
                 <p>性別：{member.Sex}</p>
-                <p>是否為OB：{member.IsOB}</p>
                 <p>守位：{member.position}</p>
             </Modal>
          </>
