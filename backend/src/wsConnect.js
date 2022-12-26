@@ -118,6 +118,23 @@ const wsConnect = {
                         sendData( clientWS, ['rp_get_score', [score, history]] )
                         break
                     }
+                    case 'get_hit_records': {
+                        let GID = payload
+                        let hitRecords = await HitRecord.aggregate( [
+                            { $match: { GID: GID } },
+                            { $sort: { PAID: 1 } }
+                        ] )
+
+                        for ( let i = 0; i < hitRecords.length; i++ ) {
+                            hitRecords[i].Pitcher = await Player.findOne( { SID: hitRecords[i].Pitcher } ).select( 'PName' )
+                            hitRecords[i].Pitcher = hitRecords[i].Pitcher.PName
+                            hitRecords[i].Hitter = await Player.findOne( { SID: hitRecords[i].Hitter } ).select( 'PName' )
+                            hitRecords[i].Hitter = hitRecords[i].Hitter.PName
+                        }
+
+                        sendData( clientWS, ['rp_get_hit_records', hitRecords] )
+                        break
+                    }
                     default: {
                         console.log( `Invalid commend!!!!!!!!!` )
                         break
