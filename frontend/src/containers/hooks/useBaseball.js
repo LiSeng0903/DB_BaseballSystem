@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, useEffect } from "react";
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { FileTextOutlined, TrophyOutlined ,UserOutlined } from '@ant-design/icons';
 
 const client = new WebSocket('ws://localhost:4000/')
 
@@ -56,7 +56,7 @@ const BaseballProvider = (props) => {
         {
           label: '球隊',
           key: 'team',
-          icon: <MailOutlined />,
+          icon: <UserOutlined />,
           children: [
               {
                 label: "富邦悍將",
@@ -87,12 +87,12 @@ const BaseballProvider = (props) => {
         {
           label: '賽程',
           key: 'schedule',
-          icon: <AppstoreOutlined />,
+          icon: <FileTextOutlined />,
         },
         {
-          label: "戰積",
+          label: "戰績",
           key: 'score',
-          icon: <MailOutlined />,
+          icon: <TrophyOutlined />,
         },
       ])
     const [teams, setTeams] = useState([]);

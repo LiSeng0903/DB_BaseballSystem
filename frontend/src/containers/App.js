@@ -11,6 +11,7 @@ const AppWrapper = styled.div`
     height: 100vh;
     width: 100%;
     margin: auto;
+    background-color: aliceblue;
 `
 
 // App

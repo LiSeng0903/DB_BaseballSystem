@@ -6,7 +6,7 @@ import { Menu } from 'antd';
 import styled from 'styled-components'
 
 import { useBaseball } from './hooks/useBaseball';
-
+import baseballImg from "../img/baseball.png"
 
 import Schedule from "../components/Schedule"
 import TeamMember from "../components/TeamMember"
@@ -103,7 +103,7 @@ const MainPage = () => {
     return(
       <>
         <TopBarStyle>
-            <div>logo</div>
+            <img src={baseballImg} style={{ height: "30px", paddingRight: "30px" }}/>
             <MenuStyle onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
         </TopBarStyle>
         <BarItemStyle >
