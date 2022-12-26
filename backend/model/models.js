@@ -8,7 +8,6 @@ const PlayerSchema = new Schema( {
     Dept: { type: String, required: [true, 'Dept field missed'] },
     Grade: { type: Number, required: [true, 'Grade field missed'] },
     Sex: { type: String, required: [true, 'Sex field missed'] },
-    IsOB: { type: Boolean, required: [true, 'IsOB field missed'] },
     JerNum: { type: Number, required: [true, 'JerNum field missed'] },
     Team: { type: String, required: [true, 'Team field missed'] } // FK: Team.TName
 } )

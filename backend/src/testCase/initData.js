@@ -35,7 +35,6 @@ const initData = async () => {
             Dept: randChoose( depts ),
             Grade: randChoose( range( 1, 5 ) ),
             Sex: randChoose( ['男', '女', '其他'] ),
-            IsOB: randChoose( [true, false] ),
             JerNum: randChoose( range( 1, 100 ) ),
             Team: teamNames[i]
         } )
@@ -47,7 +46,6 @@ const initData = async () => {
             Dept: randChoose( depts ),
             Grade: randChoose( range( 1, 5 ) ),
             Sex: randChoose( ['男', '女', '其他'] ),
-            IsOB: randChoose( [true, false] ),
             JerNum: randChoose( range( 1, 100 ) ),
             Team: randChoose( teamNames )
         } )

@@ -33,7 +33,10 @@ const wsConnect = {
                     }
                     case 'get_team_players': {
                         let teamName = payload
-                        let teamPlayers = await Player.find( { Team: teamName } )
+                        let teamPlayers = await Player.aggregate( [
+                            { $match: { Team: teamName } },
+                            { $sort: { JerNum: 1 } }
+                        ] )
                         sendData( clientWS, ['rp_get_team_players', teamPlayers] )
                         break
                     }
@@ -61,6 +64,18 @@ const wsConnect = {
                         ] )
 
                         sendData( clientWS, ['rp_get_games', games] )
+                        break
+                    }
+                    case 'get_score': {
+                        let teamName = payload
+                        let score = {
+                            win: 10,
+                            lost: 10,
+                            winRate: 10
+                        }
+                        let history = await Game.find( {} )
+
+                        sendData( clientWS, ['rp_get_score', [score, history]] )
                         break
                     }
                     default: {
