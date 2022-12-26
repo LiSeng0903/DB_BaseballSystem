@@ -8,7 +8,6 @@ const PlayerSchema = new Schema( {
     Dept: { type: String, required: [true, 'Dept field missed'] },
     Grade: { type: Number, required: [true, 'Grade field missed'] },
     Sex: { type: String, required: [true, 'Sex field missed'] },
-    IsOB: { type: Boolean, required: [true, 'IsOB field missed'] },
     JerNum: { type: Number, required: [true, 'JerNum field missed'] },
     Team: { type: String, required: [true, 'Team field missed'] } // FK: Team.TName
 } )
@@ -29,7 +28,7 @@ const ManagerSchema = new Schema( {
 
 const GameSchema = new Schema( {
     GID: { type: Number, required: [true, 'GID field missed'], unique: true }, // PK
-    Date: { type: Date, required: [true, 'Date field missed'] },
+    GameDate: { type: Date, required: [true, 'Date field missed'] },
     HomeTeam: { type: String, required: [true, 'HomeTeam field missed'] }, // FK: Team.TName
     HomeScore: { type: Number, required: [true, 'HomeScore field missed'] },
     AwayTeam: { type: String, required: [true, 'AwayTeam field missed'] }, // FK: Team.TName

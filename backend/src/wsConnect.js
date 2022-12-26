@@ -12,6 +12,40 @@ const end_req_msg = ( task ) => {
     console.log( `[Finish req] ${task}` )
 }
 
+const get_game_stat = async ( teamName ) => {
+    let history = await Game.aggregate( [
+        { $match: { $or: [{ HomeTeam: teamName }, { AwayTeam: teamName }] } },
+        { $sort: { GameDate: 1 } }
+    ] )
+
+    let win = 0
+    let lose = 0
+    let tie = 0
+    let winRate = 0
+
+    for ( let i = 0; i < history.length; i++ ) {
+        // win 
+        if (
+            ( history[i].HomeTeam == teamName && history[i].HomeScore > history[i].AwayScore ) ||
+            ( history[i].AwayTeam == teamName && history[i].AwayScore > history[i].HomeScore ) ) {
+
+            win += 1
+        }
+        else if (
+            ( history[i].HomeTeam == teamName && history[i].HomeScore < history[i].AwayScore ) ||
+            ( history[i].AwayTeam == teamName && history[i].AwayScore < history[i].HomeScore ) ) {
+
+            lose += 1
+        }
+        else {
+            tie += 1
+        }
+    }
+
+    winRate = win / ( win + lose + tie )
+    return [[win, lose, tie, winRate], history]
+}
+
 const wsConnect = {
     onMessage: ( serverWS, clientWS ) => {
         return (
@@ -19,52 +53,73 @@ const wsConnect = {
                 const { data } = byteString
                 const [task, payload] = JSON.parse( data )
 
+                start_req_msg( task )
+
                 switch ( task ) {
                     case 'get_teams': {
-                        start_req_msg( task )
-
                         let teamNames = []
                         let teams = await Team.find( {} )
                         for ( let i = 0; i < teams.length; i++ ) {
                             teamNames.push( teams[i].TName )
                         }
                         sendData( clientWS, ['rp_get_teams', teamNames] )
-
-                        end_req_msg( task )
                         break
                     }
                     case 'get_team_players': {
-                        start_req_msg( task )
-
                         let teamName = payload
-                        let teamPlayers = await Player.find( { Team: teamName } )
+                        let teamPlayers = await Player.aggregate( [
+                            { $match: { Team: teamName } },
+                            { $sort: { JerNum: 1 } }
+                        ] )
                         sendData( clientWS, ['rp_get_team_players', teamPlayers] )
-
-                        end_req_msg( task )
                         break
                     }
                     case 'get_team_managers': {
-                        start_req_msg( task )
-
                         let teamName = payload
                         let teamManagers = await Manager.find( { Team: teamName } )
                         sendData( clientWS, ['rp_get_team_managers', teamManagers] )
-
-                        end_req_msg( task )
                         break
                     }
                     case 'get_team_captain': {
-                        start_req_msg( task )
                         let teamName = payload
                         let targetTeam = await Team.findOne( { TName: teamName } )
                         let captain = await Player.findOne( { SID: targetTeam.Captain } )
                         sendData( clientWS, ['rp_get_team_captain', captain] )
-                        end_req_msg( task )
                         break
                     }
-                    default:
+                    case 'get_games': {
+                        let [year, month] = payload
+                        let games = await Game.aggregate( [
+                            { $addFields: { "year": { $year: '$GameDate' } } },
+                            { $match: { year: year } },
+                            { $addFields: { "month": { $month: '$GameDate' } } },
+                            { $match: { month: month } },
+                            { $sort: { GameDate: 1 } }
+                        ] )
+
+                        sendData( clientWS, ['rp_get_games', games] )
                         break
+                    }
+                    case 'get_score': {
+                        let teamName = payload
+                        let [[win, lose, tie, winRate], history] = get_game_stat( teamName )
+                        let score = {
+                            win: win,
+                            lose: lose,
+                            tie: tie,
+                            winRate: winRate
+                        }
+
+                        sendData( clientWS, ['rp_get_score', [score, history]] )
+                        break
+                    }
+                    default: {
+                        console.log( `Invalid commend!!!!!!!!!` )
+                        break
+                    }
                 }
+
+                end_req_msg( task )
             }
         )
     }

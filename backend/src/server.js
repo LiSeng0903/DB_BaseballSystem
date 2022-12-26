@@ -4,13 +4,13 @@ import mongoose from "mongoose"
 import WebSocket from 'ws'
 
 import mongo from './mongo.js'
-import { initData } from "../testCase/initData.js"
+import { initData } from "./testCase/initData.js"
 import { wsConnect } from "./wsConnect.js"
-import { test } from "../testCase/webSocketTest.js"
+import { test } from "./testCase/webSocketTest.js"
 
-const INIT = false
+const INIT = true
 const TEST = true
-const SERVER_IP = 'localhost'
+const SERVER_IP = '192.168.88.103'
 
 mongo.connect()
 
