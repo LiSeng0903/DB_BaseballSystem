@@ -111,6 +111,33 @@ const wsConnect = {
                         break
                     }
                     case 'get_games': {
+                        let [year, month] = payload
+
+                        sql_con.connect( ( err ) => {
+                            if ( err ) throw err
+                            console.log( "MYSQL connected!" )
+
+                            let sql = `SELECT
+                                            *,
+                                            YEAR(GameDate) AS year,
+                                            MONTH(GameDate) AS 'month',
+                                            DAY(GameDate) AS 'day'
+                                        FROM
+                                            Game
+                                        WHERE
+                                            MONTH(GameDate) = ${month}
+                                            AND year(GameDate) = ${year}
+                                        ORDER BY
+                                            GameDate`
+
+                            sql_con.query( sql, ( err, result ) => {
+                                if ( err ) throw err
+                                let games = result
+                                sendData( clientWS, ['rp_get_games', games] )
+                            } )
+
+                            sql_con.end()
+                        } )
                         break
                     }
                     case 'get_score': {

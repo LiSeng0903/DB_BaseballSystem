@@ -1,7 +1,12 @@
 SELECT
-    PName
+    *,
+    YEAR(GameDate) AS year,
+    MONTH(GameDate) AS 'month',
+    DAY(GameDate) AS 'day'
 FROM
-    team
-    INNER JOIN player ON team.Captain = player.SID
+    Game
 WHERE
-    TName = '富邦悍將'
+    MONTH(GameDate) = 6
+    AND year(GameDate) = 2022
+ORDER BY
+    GameDate
