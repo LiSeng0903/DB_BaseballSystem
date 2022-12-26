@@ -11,6 +11,9 @@ const sendData = async (data) => {
     await client.send(JSON.stringify(data));
 }
 
+client.onopen = () => {
+    sendData(["get_teams"])
+}
 
 const BaseballContext = createContext(
     {
