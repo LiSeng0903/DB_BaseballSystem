@@ -80,6 +80,7 @@ const Schedule = () => {
     ) : null;
   };
   const dateCellRender = (value) => {
+    console.log(value)
     const listData = getListData(value);
     return (
       <ul className="events">

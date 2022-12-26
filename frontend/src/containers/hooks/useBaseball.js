@@ -3,6 +3,10 @@ import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/ico
 
 const client = new WebSocket('ws://192.168.88.103:4000/')
 
+client.onopen = () => {
+    sendData( ["get_teams"] )
+}
+
 const sendData = async (data) => {
     await client.send(JSON.stringify(data));
 }
@@ -30,6 +34,12 @@ const BaseballContext = createContext(
 
       games: [],
       setGames: () => {},
+
+      scores: {},
+      setScores: () => {},
+
+      historyGames: [],
+      setHistoryGames: () => {},
 
       getTeams: () => {},
 
@@ -91,6 +101,8 @@ const BaseballProvider = (props) => {
     const [captain, setCaptain] = useState({});
     const [managers, setManagers] = useState([]);
     const [games, setGames] = useState([]);
+    const [scores, setScores] = useState({});
+    const [historyGames, setHistoryGames] = useState([]);
 
 
 
@@ -123,8 +135,8 @@ const BaseballProvider = (props) => {
         sendData(["get_games", [year, month]])
     }
 
-    const get_score = () => {
-        sendData(["get_score", ])
+    const get_score = (teamName) => {
+        sendData(["get_score", teamName])
     }
 
 
@@ -155,8 +167,15 @@ const BaseballProvider = (props) => {
             }
 
             case "rp_get_games": {
-                console.log(payload);
                 setGames(payload);
+                break;
+            }
+
+            case "rp_get_score": {
+                console.log(payload)
+                const [scores, historyGames] = payload;
+                setScores(scores);
+                setHistoryGames(historyGames);
                 break;
             }
         }
