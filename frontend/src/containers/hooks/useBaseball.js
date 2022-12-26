@@ -1,10 +1,10 @@
 import { useState, createContext, useContext, useEffect } from "react";
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 
-const client = new WebSocket('ws://192.168.88.103:4000/')
+const client = new WebSocket('ws://172.20.10.3:4000/')
 
 client.onopen = () => {
-    sendData( ["get_teams"] )
+    sendData(["get_teams"])
 }
 
 const sendData = async (data) => {
@@ -36,6 +36,9 @@ const BaseballContext = createContext(
 
       historyGames: [],
       setHistoryGames: () => {},
+
+      hitRecords: [],
+      setHitRecords: () => {},
 
       getTeams: () => {},
 
@@ -99,6 +102,7 @@ const BaseballProvider = (props) => {
     const [games, setGames] = useState([]);
     const [scores, setScores] = useState({});
     const [historyGames, setHistoryGames] = useState([]);
+    const [hitRecords, setHitRecords] = useState([]);
 
 
 
@@ -133,6 +137,10 @@ const BaseballProvider = (props) => {
 
     const get_score = (teamName) => {
         sendData(["get_score", teamName])
+    }
+
+    const get_hitRecords = (gameID) => {
+        sendData(["get_hit_records", gameID])
     }
 
 
@@ -173,6 +181,12 @@ const BaseballProvider = (props) => {
                 setHistoryGames(historyGames);
                 break;
             }
+
+            case "rp_get_hit_records": {
+                console.log(payload)
+                setHitRecords(payload);
+                break;
+            }
         }
     }
 
@@ -187,10 +201,12 @@ const BaseballProvider = (props) => {
                 scores,
                 historyGames,
                 games,
+                hitRecords,
                 getTeams,
                 getPeople,
                 get_schedule,
-                get_score
+                get_score,
+                get_hitRecords,
             }}
             {...props}
         />
