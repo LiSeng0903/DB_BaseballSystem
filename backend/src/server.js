@@ -10,7 +10,7 @@ import { test } from "./testCase/webSocketTest.js"
 
 const INIT = false
 const TEST = false
-const SERVER_IP = '192.168.88.103'
+const SERVER_IP = '172.20.10.3'
 
 mongo.connect()
 
