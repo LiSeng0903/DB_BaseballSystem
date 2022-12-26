@@ -29,7 +29,7 @@ const ManagerSchema = new Schema( {
 
 const GameSchema = new Schema( {
     GID: { type: Number, required: [true, 'GID field missed'], unique: true }, // PK
-    Date: { type: Date, required: [true, 'Date field missed'] },
+    GameDate: { type: Date, required: [true, 'Date field missed'] },
     HomeTeam: { type: String, required: [true, 'HomeTeam field missed'] }, // FK: Team.TName
     HomeScore: { type: Number, required: [true, 'HomeScore field missed'] },
     AwayTeam: { type: String, required: [true, 'AwayTeam field missed'] }, // FK: Team.TName

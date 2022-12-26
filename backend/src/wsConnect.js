@@ -19,52 +19,57 @@ const wsConnect = {
                 const { data } = byteString
                 const [task, payload] = JSON.parse( data )
 
+                start_req_msg( task )
+
                 switch ( task ) {
                     case 'get_teams': {
-                        start_req_msg( task )
-
                         let teamNames = []
                         let teams = await Team.find( {} )
                         for ( let i = 0; i < teams.length; i++ ) {
                             teamNames.push( teams[i].TName )
                         }
                         sendData( clientWS, ['rp_get_teams', teamNames] )
-
-                        end_req_msg( task )
                         break
                     }
                     case 'get_team_players': {
-                        start_req_msg( task )
-
                         let teamName = payload
                         let teamPlayers = await Player.find( { Team: teamName } )
                         sendData( clientWS, ['rp_get_team_players', teamPlayers] )
-
-                        end_req_msg( task )
                         break
                     }
                     case 'get_team_managers': {
-                        start_req_msg( task )
-
                         let teamName = payload
                         let teamManagers = await Manager.find( { Team: teamName } )
                         sendData( clientWS, ['rp_get_team_managers', teamManagers] )
-
-                        end_req_msg( task )
                         break
                     }
                     case 'get_team_captain': {
-                        start_req_msg( task )
                         let teamName = payload
                         let targetTeam = await Team.findOne( { TName: teamName } )
                         let captain = await Player.findOne( { SID: targetTeam.Captain } )
                         sendData( clientWS, ['rp_get_team_captain', captain] )
-                        end_req_msg( task )
                         break
                     }
-                    default:
+                    case 'get_games': {
+                        let [year, month] = payload
+                        let games = await Game.aggregate( [
+                            { $addFields: { "year": { $year: '$GameDate' } } },
+                            { $match: { year: year } },
+                            { $addFields: { "month": { $month: '$GameDate' } } },
+                            { $match: { month: month } },
+                            { $sort: { GameDate: 1 } }
+                        ] )
+
+                        sendData( clientWS, ['rp_get_games', games] )
                         break
+                    }
+                    default: {
+                        console.log( `Invalid commend!!!!!!!!!` )
+                        break
+                    }
                 }
+
+                end_req_msg( task )
             }
         )
     }
