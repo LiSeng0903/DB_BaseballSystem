@@ -13,4 +13,6 @@ const depts = [
     '工商管理學系'
 ]
 
-export { depts }
+module.exports = {
+    depts: depts
+}

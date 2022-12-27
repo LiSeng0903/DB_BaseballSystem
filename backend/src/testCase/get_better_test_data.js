@@ -1,10 +1,10 @@
 // import data 
-import { depts } from "./data/data_depts.js"
-import { teams as teamNames } from './data/data_teams.js'
-import { chinese_names } from './data/data_chinese_names.js'
-import { english_names } from './data/data_english_names.js'
-import { relations } from "./data/data_relations.js"
-import { positions } from "./data/data_positions.js"
+let depts = require( './data/data_depts.js' ).depts
+let teamNames = require( './data/data_teams.js' ).teams
+let chinese_names = require( './data/data_chinese_names.js' ).chinese_names
+let english_names = require( './data/data_english_names.js' ).english_names
+let relations = require( './data/data_relations.js' ).relations
+let positions = require( './data/data_positions.js' ).positions
 
 const NAME_LANGUAGE = 'chinese'
 
@@ -13,7 +13,7 @@ class Game {
         // set basic info
         let battleTeam = randomChooseMany( teamNames, 2 )
         this.GID = get_GID()
-        this.GameDate = '2022-' + String( randChoose( range( 1, 13 ) ) ) + '-' + String( randChoose( range( 1, 31 ) ) )
+        this.GameDate = '2022-' + String( randChoose( range( 1, 13 ) ) ).padStart( 2, '0' ) + '-' + String( randChoose( range( 1, 28 ) ) ).padStart( 2, '0' )
         this.HomeTeam = battleTeam[0]
         this.HomeScore = 0
         this.AwayTeam = battleTeam[1]
@@ -92,10 +92,10 @@ class Game {
 
         // play game 
         let PA = 0
+        let hitterIndex = [0, 0]
         for ( let inning = 1; inning <= 9; inning++ ) {
             for ( let half = 0; half < 2; half++ ) {
                 let out = 0
-                let hitterIndex = [0, 0]
                 let pitcherSID = ( half == 0 ? this.awayLineUp[0] : this.homeLineUp[0] )
                 let base = 0
                 while ( out < 3 ) {
@@ -308,4 +308,6 @@ const get_test_case = () => {
     }
 }
 
-export { get_test_case }
+module.exports = {
+    get_test_case: get_test_case
+}

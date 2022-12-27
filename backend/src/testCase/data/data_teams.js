@@ -7,4 +7,6 @@ const teams = [
     '台鋼雄鷹'
 ]
 
-export { teams }
+module.exports = {
+    teams: teams
+}
