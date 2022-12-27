@@ -243,7 +243,7 @@ const get_test_case = () => {
             if ( i == 0 ) { teams[teamId].Captain = newPlayer.SID }
 
             // Generate players' relatives 
-            let relativesCnt = randChoose( range( 0, 4 ) )
+            let relativesCnt = randChoose( range( 1, 4 ) )
             let tempRels = randomChooseMany( relations, relativesCnt )
             for ( let j = 0; j < relativesCnt; j++ ) {
                 let newRelative = {
