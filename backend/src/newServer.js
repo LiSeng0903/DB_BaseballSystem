@@ -2,12 +2,13 @@
 const http = require( 'http' )
 const express = require( 'express' )
 const SocketServer = require( 'ws' ).Server
+const wsConnect = require( './newWsConnect' ).wsConnect
 
 const test = require( './testCase/test.js' ).test
 
 // constant 
-SERVER_IP = 'localhost'
-TEST = true
+const SERVER_IP = '172.20.10.3'
+const TEST = false
 
 // make server 
 const app = express()

@@ -26,10 +26,10 @@ const wsConnect = {
                     database: 'baseball'
                 } )
 
-                start_req_msg( task )
-
                 switch ( task ) {
                     case 'get_teams': {
+                        start_req_msg( task )
+
                         sql_con.connect( ( err ) => {
                             if ( err ) throw err
                             console.log( "MYSQL connected!" )
@@ -38,11 +38,12 @@ const wsConnect = {
                             sql_con.query( sql, ( err, result ) => {
                                 if ( err ) throw err
                                 let teamNames = []
-                                for ( let i = 0; i < teams.length; i++ ) {
+                                for ( let i = 0; i < result.length; i++ ) {
                                     teamNames.push( result[i].TName )
                                 }
 
                                 sendData( clientWS, ['rp_get_teams', teamNames] )
+                                end_req_msg( task )
                             } )
 
                             sql_con.end()
@@ -50,6 +51,8 @@ const wsConnect = {
                         break
                     }
                     case 'get_team_players': {
+                        start_req_msg( task )
+
                         let teamName = payload
 
                         sql_con.connect( ( err ) => {
@@ -60,7 +63,9 @@ const wsConnect = {
                             sql_con.query( sql, ( err, result ) => {
                                 if ( err ) throw err
                                 let teamPlayers = result
+
                                 sendData( clientWS, ['rp_get_team_players', teamPlayers] )
+                                end_req_msg( task )
                             } )
 
                             sql_con.end()
@@ -68,6 +73,8 @@ const wsConnect = {
                         break
                     }
                     case 'get_team_managers': {
+                        start_req_msg( task )
+
                         let teamName = payload
 
                         sql_con.connect( ( err ) => {
@@ -78,7 +85,9 @@ const wsConnect = {
                             sql_con.query( sql, ( err, result ) => {
                                 if ( err ) throw err
                                 let teamManagers = result
+
                                 sendData( clientWS, ['rp_get_team_managers', teamManagers] )
+                                end_req_msg( task )
                             } )
 
                             sql_con.end()
@@ -86,6 +95,8 @@ const wsConnect = {
                         break
                     }
                     case 'get_team_captain': {
+                        start_req_msg( task )
+
                         let teamName = payload
 
                         sql_con.connect( ( err ) => {
@@ -103,7 +114,9 @@ const wsConnect = {
                             sql_con.query( sql, ( err, result ) => {
                                 if ( err ) throw err
                                 let teamCaptain = result[0]
+
                                 sendData( clientWS, ['rp_get_team_captain', teamCaptain] )
+                                end_req_msg( task )
                             } )
 
                             sql_con.end()
@@ -111,6 +124,8 @@ const wsConnect = {
                         break
                     }
                     case 'get_games': {
+                        start_req_msg( task )
+
                         let [year, month] = payload
 
                         sql_con.connect( ( err ) => {
@@ -133,7 +148,9 @@ const wsConnect = {
                             sql_con.query( sql, ( err, result ) => {
                                 if ( err ) throw err
                                 let games = result
+
                                 sendData( clientWS, ['rp_get_games', games] )
+                                end_req_msg( task )
                             } )
 
                             sql_con.end()
@@ -141,6 +158,7 @@ const wsConnect = {
                         break
                     }
                     case 'get_score': {
+                        start_req_msg( task )
                         let teamName = payload
 
                         sql_con.connect( ( err ) => {
@@ -197,6 +215,7 @@ const wsConnect = {
                                     winRate: winRate
                                 }
 
+                                end_req_msg( task )
                                 sendData( clientWS, ['rp_get_score', [score, history]] )
                             } )
 
@@ -205,6 +224,8 @@ const wsConnect = {
                         break
                     }
                     case 'get_hit_records': {
+                        start_req_msg( task )
+
                         let GID = payload
 
                         sql_con.connect( ( err ) => {
@@ -233,12 +254,13 @@ const wsConnect = {
                                         WHERE
                                             GID = ${GID}
                                         ORDER BY
-                                            Pitcher,
-                                            Hitter`
+                                            PAID`
 
                             sql_con.query( sql, ( err, result ) => {
                                 if ( err ) throw err
                                 let hitRecords = result
+
+                                end_req_msg( task )
                                 sendData( clientWS, ['rp_get_hit_records', hitRecords] )
                             } )
 
@@ -251,8 +273,11 @@ const wsConnect = {
                         break
                     }
                 }
-                end_req_msg( task )
             }
         )
     }
+}
+
+module.exports = {
+    wsConnect: wsConnect
 }
