@@ -46,6 +46,9 @@ const BaseballContext = createContext(
       canPositions: [],
       setCanPositions: () => {},
 
+      hitRate: 0,
+      setHitRate: () => {},
+
       getTeams: () => {},
 
       getPeople: () => {},
@@ -111,6 +114,7 @@ const BaseballProvider = (props) => {
     const [hitRecords, setHitRecords] = useState([]);
     const [relatives,setRelatives] = useState([]);
     const [canPositions, setCanPositions] = useState([]);
+    const [hitRate, setHitRate] = useState(0);
 
 
 
@@ -157,6 +161,10 @@ const BaseballProvider = (props) => {
 
     const get_canPositions = (playerID) => {
         sendData(["get_can_positions", playerID])
+    }
+
+    const get_hitRate = (playerID) => {
+        sendData(["get_hit_rate", playerID]);
     }
 
 
@@ -214,6 +222,13 @@ const BaseballProvider = (props) => {
                 setCanPositions(canPS);
                 break;
             }
+
+            case "rp_get_hit_rate": {
+                let hitr = Math.round(payload * 1000) / 1000;
+                console.log(hitr)
+                setHitRate(hitr);
+                break;
+            }
         }
     }
 
@@ -231,6 +246,7 @@ const BaseballProvider = (props) => {
                 hitRecords,
                 relatives,
                 canPositions,
+                hitRate,
                 getTeams,
                 getPeople,
                 get_schedule,
@@ -238,6 +254,7 @@ const BaseballProvider = (props) => {
                 get_hitRecords,
                 get_relatives,
                 get_canPositions,
+                get_hitRate,
             }}
             {...props}
         />
