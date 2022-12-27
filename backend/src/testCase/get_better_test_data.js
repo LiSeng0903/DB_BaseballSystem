@@ -283,7 +283,7 @@ const get_test_case = () => {
     }
 
     // play games 
-    for ( let i = 0; i < 300; i++ ) {
+    for ( let i = 0; i < 100; i++ ) {
         let game = new Game( teamNames, players, canPositions )
         game.playGame()
 

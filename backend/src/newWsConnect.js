@@ -325,6 +325,38 @@ const wsConnect = {
                         } )
                         break
                     }
+                    case 'get_hit_rate': {
+                        start_req_msg( task )
+
+                        let SID = payload
+                        sql_con.connect( ( err ) => {
+                            if ( err ) throw err
+                            console.log( "MYSQL connected!" )
+
+                            let sql = `SELECT
+                                            Result      
+                                        FROM
+                                            HitRecord
+                                        WHERE
+                                            Hitter = '${SID}'`
+
+                            sql_con.query( sql, ( err, result ) => {
+                                if ( err ) throw err
+                                let hitCnt = 0
+                                for ( let i = 0; i < result.length; i++ ) {
+                                    if ( result[i].Result == 'H' ) {
+                                        hitCnt += 1
+                                    }
+                                }
+                                let hitRate = hitCnt / result.length
+                                sendData( clientWS, ['rp_get_hit_rate', hitRate] )
+                                end_req_msg( task )
+                            } )
+
+                            sql_con.end()
+                        } )
+                        break
+                    }
                     default: {
                         console.log( `Invalid commend!!!!!!!!!` )
                         break
