@@ -40,6 +40,12 @@ const BaseballContext = createContext(
       hitRecords: [],
       setHitRecords: () => {},
 
+      relatives: [],
+      setRelatives: () => {},
+
+      canPositions: [],
+      setCanPositions: () => {},
+
       getTeams: () => {},
 
       getPeople: () => {},
@@ -103,6 +109,8 @@ const BaseballProvider = (props) => {
     const [scores, setScores] = useState({});
     const [historyGames, setHistoryGames] = useState([]);
     const [hitRecords, setHitRecords] = useState([]);
+    const [relatives,setRelatives] = useState([]);
+    const [canPositions, setCanPositions] = useState([]);
 
 
 
@@ -141,6 +149,14 @@ const BaseballProvider = (props) => {
 
     const get_hitRecords = (gameID) => {
         sendData(["get_hit_records", gameID])
+    }
+
+    const get_relatives = (playerID) => {
+        sendData(["get_relatives", playerID])
+    }
+
+    const get_canPositions = (playerID) => {
+        sendData(["get_can_positions", playerID])
     }
 
 
@@ -183,9 +199,16 @@ const BaseballProvider = (props) => {
             }
 
             case "rp_get_hit_records": {
-                console.log(payload)
                 setHitRecords(payload);
                 break;
+            }
+
+            case "rp_get_relatives": {
+                setRelatives(payload);
+            }
+            
+            case "rp_get_can_positions": {
+                setCanPositions(payload);
             }
         }
     }
@@ -202,11 +225,15 @@ const BaseballProvider = (props) => {
                 historyGames,
                 games,
                 hitRecords,
+                relatives,
+                canPositions,
                 getTeams,
                 getPeople,
                 get_schedule,
                 get_score,
                 get_hitRecords,
+                get_relatives,
+                get_canPositions,
             }}
             {...props}
         />
