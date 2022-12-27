@@ -1,6 +1,2 @@
-SELECT
-    *
-FROM
-    Relative
-WHERE
-    SID = 'B09900043'
+select * 
+from manager

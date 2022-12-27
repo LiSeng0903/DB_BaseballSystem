@@ -81,7 +81,7 @@ const wsConnect = {
                             if ( err ) throw err
                             console.log( "MYSQL connected!" )
 
-                            let sql = `SELECT * FROM Player WHERE Player.Team = '${teamName}'`
+                            let sql = `SELECT * FROM Manager WHERE Manager.Team = '${teamName}'`
                             sql_con.query( sql, ( err, result ) => {
                                 if ( err ) throw err
                                 let teamManagers = result

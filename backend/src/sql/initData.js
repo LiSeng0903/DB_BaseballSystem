@@ -39,7 +39,7 @@ init_con.connect( ( err ) => {
     // manager 
     let Manager_init_sql = 'INSERT INTO Manager( SID, PName, Dept, Grade, Sex, Team ) VALUES'
     for ( let i = 0; i < managers.length; i++ ) {
-        Manager_init_sql += `('${players[i].SID}', '${players[i].PName}', '${players[i].Dept}', '${players[i].Grade}', '${players[i].Sex}', '${players[i].Team}')${i == managers.length - 1 ? ';' : ','}`
+        Manager_init_sql += `('${managers[i].SID}', '${managers[i].PName}', '${managers[i].Dept}', '${managers[i].Grade}', '${managers[i].Sex}', '${managers[i].Team}')${i == managers.length - 1 ? ';' : ','}`
     }
     init_con.query( Manager_init_sql, ( err, result ) => {
         if ( err ) throw err
