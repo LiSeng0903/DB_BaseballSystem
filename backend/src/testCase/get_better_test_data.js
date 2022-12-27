@@ -244,10 +244,11 @@ const get_test_case = () => {
 
             // Generate players' relatives 
             let relativesCnt = randChoose( range( 0, 4 ) )
+            let tempRels = randomChooseMany( relations, relativesCnt )
             for ( let j = 0; j < relativesCnt; j++ ) {
                 let newRelative = {
                     SID: newPlayer.SID,
-                    Relation: randChoose( relations ),
+                    Relation: tempRels[j],
                     Phone: get_phone(),
                     Name: randChoose( NAME_LANGUAGE == 'chinese' ? chinese_names : english_names )
                 }
