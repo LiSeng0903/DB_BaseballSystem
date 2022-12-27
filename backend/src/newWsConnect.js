@@ -268,6 +268,63 @@ const wsConnect = {
                         } )
                         break
                     }
+                    case 'get_relatives': {
+                        start_req_msg( task )
+
+                        let SID = payload
+                        sql_con.connect( ( err ) => {
+                            if ( err ) throw err
+                            console.log( "MYSQL connected!" )
+
+                            let sql = `SELECT
+                                            *
+                                        FROM
+                                            Relative
+                                        WHERE
+                                            SID = '${SID}'`
+
+                            sql_con.query( sql, ( err, result ) => {
+                                if ( err ) throw err
+                                let relatives = result
+
+                                sendData( clientWS, ['rp_get_relatives', relatives] )
+                                end_req_msg( task )
+                            } )
+
+                            sql_con.end()
+                        } )
+                        break
+                    }
+                    case 'get_can_positions': {
+                        start_req_msg( task )
+
+                        let SID = payload
+                        sql_con.connect( ( err ) => {
+                            if ( err ) throw err
+                            console.log( "MYSQL connected!" )
+
+                            let sql = `SELECT
+                                            Position
+                                        FROM
+                                            CanPosition
+                                        WHERE
+                                            SID = '${SID}'`
+
+                            sql_con.query( sql, ( err, result ) => {
+                                if ( err ) throw err
+                                let canPositions = []
+                                for ( let i = 0; i < result.length; i++ ) {
+                                    canPositions.push( result[i].Position )
+                                }
+
+                                sendData( clientWS, ['rp_get_can_positions', canPositions] )
+                                end_req_msg( task )
+                            } )
+
+                            sql_con.end()
+                        } )
+                        break
+                    }
                     default: {
                         console.log( `Invalid commend!!!!!!!!!` )
                         break
