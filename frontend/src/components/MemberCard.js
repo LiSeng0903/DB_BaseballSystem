@@ -30,7 +30,7 @@ const MemberCard = ({member}) => {
             <CardStyle title={member.JerNum?member.JerNum:'manager'} hoverable onClick={() => showModal()}>
                 <h3>{member.PName}</h3>
             </ CardStyle>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="詳細資料" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <p>系級：{member.Dept + member.Grade}</p>
                 <p>學號：{member.SID}</p>
                 <p>性別：{member.Sex}</p>

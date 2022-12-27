@@ -53,7 +53,7 @@ const ScoreBoard = ({teams}) =>{
                             </Card>
                         ))
                     }
-                    <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                    <Modal title="逐打席紀錄" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                         <Table dataSource={hitRecords}>
                             <Column title="打席" dataIndex="PAID" />
                             <Column title="打者" dataIndex="Hitter" />
