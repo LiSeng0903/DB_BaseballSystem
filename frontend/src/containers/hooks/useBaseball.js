@@ -205,12 +205,14 @@ const BaseballProvider = (props) => {
 
             case "rp_get_relatives": {
                 setRelatives(payload);
+                break;
             }
             
             case "rp_get_can_positions": {
                 let array = payload;
                 let canPS = array.join()
                 setCanPositions(canPS);
+                break;
             }
         }
     }

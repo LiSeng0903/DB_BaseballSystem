@@ -30,9 +30,9 @@ const MemberCard = ({member}) => {
     return (
         <>
             <CardStyle title={member.JerNum?member.JerNum:'manager'} hoverable onClick={() => {
-                showModal();
                 get_canPositions(member.SID);
                 get_relatives(member.SID);
+                showModal();
                 }}>
                 <h3>{member.PName}</h3>
             </ CardStyle>
