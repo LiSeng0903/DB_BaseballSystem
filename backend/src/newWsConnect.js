@@ -357,6 +357,58 @@ const wsConnect = {
                         } )
                         break
                     }
+                    case 'get_win_order': {
+                        start_req_msg( task )
+
+                        sql_con.connect( ( err ) => {
+                            if ( err ) throw err
+                            console.log( "MYSQL connected!" )
+
+                            let sql = `SELECT
+                                            CASE
+                                                WHEN HomeScore > AwayScore THEN HomeTeam
+                                                WHEN HomeScore < AwayScore THEN AwayTeam
+                                                ELSE NULL
+                                            END AS WinTeam
+                                        FROM
+                                            Game`
+
+                            sql_con.query( sql, ( err, result ) => {
+                                if ( err ) throw err
+                                let winCnts = {}
+                                let teams = ['富邦悍將', '統一獅', '樂天桃猿', '味全龍', '中信兄弟', '台鋼雄鷹']
+                                for ( let i = 0; i < teams.length; i++ ) {
+                                    winCnts[teams[i]] = 0
+                                }
+                                for ( let i = 0; i < result.length; i++ ) {
+                                    if ( result[i].WinTeam ) {
+                                        winCnts[result[i].WinTeam] += 1
+                                    }
+                                }
+
+                                var items = Object.keys( winCnts ).map( ( key ) => {
+                                    return [key, winCnts[key]]
+                                } )
+
+                                // Sort the array based on the second element
+                                items.sort( ( first, second ) => {
+                                    return second[1] - first[1]
+                                } )
+
+                                // Create a new array with only the first 5 items
+                                let winOrder = []
+                                for ( let i = 0; i < items.length; i++ ) {
+                                    winOrder.push( items[i][0] )
+                                }
+
+                                sendData( clientWS, ['rp_get_win_order', winOrder] )
+                                end_req_msg( task )
+                            } )
+
+                            sql_con.end()
+                        } )
+                        break
+                    }
                     default: {
                         console.log( `Invalid commend!!!!!!!!!` )
                         break

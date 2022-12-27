@@ -1,6 +1,8 @@
 SELECT
-    *
+    CASE
+        WHEN HomeScore > AwayScore THEN HomeTeam
+        WHEN HomeScore < AwayScore THEN AwayTeam
+        ELSE NULL
+    END AS WinTeam
 FROM
-    HitRecord
-WHERE
-    Hitter = 'B09900043'
+    Game
