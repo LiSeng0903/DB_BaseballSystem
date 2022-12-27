@@ -3,6 +3,8 @@ import { Card } from 'antd';
 import { Modal } from 'antd';
 import { useState, useEffect } from "react";
 
+import { useBaseball } from "../containers/hooks/useBaseball";
+
 
 const CardStyle = styled(Card)`
     display: flex;
@@ -11,6 +13,8 @@ const CardStyle = styled(Card)`
     width: 30%;
 `
 const MemberCard = ({member}) => {
+
+    const { get_relatives, get_canPositions } = useBaseball();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -27,7 +31,8 @@ const MemberCard = ({member}) => {
 
     return (
         <>
-            <CardStyle title={member.JerNum?member.JerNum:'manager'} hoverable onClick={() => showModal()}>
+            <CardStyle title={member.JerNum?member.JerNum:'manager'} hoverable onClick={() => {
+                showModal()}}>
                 <h3>{member.PName}</h3>
             </ CardStyle>
             <Modal title="詳細資料" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
