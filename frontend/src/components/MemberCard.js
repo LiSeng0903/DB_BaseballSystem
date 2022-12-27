@@ -27,7 +27,6 @@ const MemberCard = ({member}) => {
         setIsModalOpen(false);
     };
 
-
     return (
         <>
             <CardStyle title={member.JerNum?member.JerNum:'manager'} hoverable onClick={() => {
