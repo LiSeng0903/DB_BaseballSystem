@@ -255,7 +255,7 @@ const get_test_case = () => {
             }
 
             // Generate player's can position
-            let canPositionCnt = randChoose( range( 2, 10 ) )
+            let canPositionCnt = randChoose( range( 2, 5 ) )
             let canPositionsList = randomChooseMany( positions, canPositionCnt )
 
             for ( let j = 0; j < canPositionsList.length; j++ ) {
