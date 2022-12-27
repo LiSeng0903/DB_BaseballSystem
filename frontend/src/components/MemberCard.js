@@ -14,7 +14,7 @@ const CardStyle = styled(Card)`
 `
 const MemberCard = ({member}) => {
 
-    const { get_relatives, get_canPositions } = useBaseball();
+    const { get_relatives, get_canPositions, relatives, canPositions } = useBaseball();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {

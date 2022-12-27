@@ -208,7 +208,9 @@ const BaseballProvider = (props) => {
             }
             
             case "rp_get_can_positions": {
-                setCanPositions(payload);
+                let array = payload;
+                let canPS = array.join()
+                setCanPositions(canPS);
             }
         }
     }
