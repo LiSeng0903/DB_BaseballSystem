@@ -18,7 +18,6 @@ const MemberCard = ({member}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
-        console.log("aa")
         setIsModalOpen(true);
     };
     const handleOk = () => {
