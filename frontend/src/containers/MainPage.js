@@ -36,11 +36,6 @@ const MainPage = () => {
   const { items, teams, players, captain, managers, getTeams, getPeople, get_schedule } = useBaseball();
   const [current, setCurrent] = useState('');
 
-  useEffect(()=>{
-    console.log(items);
-  },[])
-
-
   const onClick = async (e) => {
     console.log('click ', e);
 
